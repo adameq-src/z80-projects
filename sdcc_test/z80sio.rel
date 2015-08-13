@@ -1,0 +1,67 @@
+XL2
+H 9 areas A global symbols
+M z80sio
+O -mz80
+S .__.ABS. Def0000
+A _CODE size 6F flags 0 addr 0
+S _SIO_SendString_end Def006F
+S _SIO_SendChar_end Def0047
+S _SIO_Init_start Def0000
+S _SIO_Init_end Def0031
+S _SIO_SendString Def0047
+S _SIO_SendChar Def0031
+S _SIO_SendString_start Def0047
+S _SIO_Init Def0000
+S _SIO_SendChar_start Def0031
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 00 00
+T 00 00
+R 00 00 00 00
+T 00 00 3E 30 D3 41 3E 18 D3 41 3E 04 D3 41 3E 44
+R 00 00 00 00
+T 0E 00 D3 41 3E 05 D3 41 3E E8 D3 41 3E 01 D3 41
+R 00 00 00 00
+T 1C 00 3E 00 D3 41 3E 02 D3 41 3E 00 D3 41 3E 03
+R 00 00 00 00
+T 2A 00 D3 41 3E C1 D3 41 C9
+R 00 00 00 00
+T 31 00
+R 00 00 00 00
+T 31 00
+R 00 00 00 00
+T 31 00
+R 00 00 00 00
+T 31 00 16 00 21 02 00 39 7E D3 40
+R 00 00 00 00
+T 3A 00
+R 00 00 00 00
+T 3A 00 7A 0F D8 3E 01 D3 41 DB 41 57 18 F4 C9
+R 00 00 00 00
+T 47 00
+R 00 00 00 00
+T 47 00
+R 00 00 00 00
+T 47 00
+R 00 00 00 00
+T 47 00 11 00 00
+R 00 00 00 00
+T 4A 00
+R 00 00 00 00
+T 4A 00 21 04 00 39 7B 96 7A 23 9E E2 58 00 EE 80
+R 00 00 00 00 00 0C 00 00
+T 58 00
+R 00 00 00 00
+T 58 00 F0 21 02 00 39 7E 23 66 6F 19 66 D5 E5 33
+R 00 00 00 00
+T 66 00 CD 31 00 33 D1 13 18 DC C9
+R 00 00 00 00 00 03 00 00
+T 6F 00
+R 00 00 00 00

@@ -1,0 +1,174 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.4.0 #8981 (Apr  5 2014) (MINGW64)
+                              4 ; This file was generated Sat Mar 28 21:52:29 2015
+                              5 ;--------------------------------------------------------
+                              6 	.module test
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _main
+                             13 	.globl _SIO_SendString
+                             14 	.globl _SIO_SendChar
+                             15 	.globl _SIO_Init
+                             16 	.globl _LCD_ClearScreen
+                             17 	.globl _LCD_DispString
+                             18 	.globl _LCD_Init
+                             19 	.globl _LCD_ShowBin
+                             20 	.globl _delay_ms
+                             21 ;--------------------------------------------------------
+                             22 ; special function registers
+                             23 ;--------------------------------------------------------
+                     0000    24 _PA	=	0x0000
+                     0001    25 _PA_CONTROL	=	0x0001
+                     0002    26 _PB	=	0x0002
+                     0003    27 _PB_CONTROL	=	0x0003
+                     0040    28 _SIO_A_DATA	=	0x0040
+                     0041    29 _SIO_A_CMD	=	0x0041
+                     0042    30 _SIO_B_DATA	=	0x0042
+                     0043    31 _SIO_B_CMD	=	0x0043
+                             32 ;--------------------------------------------------------
+                             33 ; ram data
+                             34 ;--------------------------------------------------------
+                             35 	.area _DATA
+                             36 ;--------------------------------------------------------
+                             37 ; ram data
+                             38 ;--------------------------------------------------------
+                             39 	.area _INITIALIZED
+                             40 ;--------------------------------------------------------
+                             41 ; absolute external ram data
+                             42 ;--------------------------------------------------------
+                             43 	.area _DABS (ABS)
+                             44 ;--------------------------------------------------------
+                             45 ; global & static initialisations
+                             46 ;--------------------------------------------------------
+                             47 	.area _HOME
+                             48 	.area _GSINIT
+                             49 	.area _GSFINAL
+                             50 	.area _GSINIT
+                             51 ;--------------------------------------------------------
+                             52 ; Home
+                             53 ;--------------------------------------------------------
+                             54 	.area _HOME
+                             55 	.area _HOME
+                             56 ;--------------------------------------------------------
+                             57 ; code
+                             58 ;--------------------------------------------------------
+                             59 	.area _CODE
+                             60 ;test.c:9: int main(void)
+                             61 ;	---------------------------------
+                             62 ; Function main
+                             63 ; ---------------------------------
+   0000                      64 _main_start::
+   0000                      65 _main:
+                             66 ;test.c:14: LCD_Init();
+   0000 CDr00r00      [17]   67 	call	_LCD_Init
+                             68 ;test.c:15: SIO_Init();
+   0003 CDr00r00      [17]   69 	call	_SIO_Init
+                             70 ;test.c:18: PA_CONTROL = 0x0F;
+   0006 3E 0F         [ 7]   71 	ld	a,#0x0F
+   0008 D3 01         [11]   72 	out	(_PA_CONTROL),a
+                             73 ;test.c:20: while(1) {
+   000A                      74 00104$:
+                             75 ;test.c:21: LCD_ClearScreen();
+   000A CDr00r00      [17]   76 	call	_LCD_ClearScreen
+                             77 ;test.c:22: LCD_DispString("mu he he            ", 20);
+   000D 21r79r00      [10]   78 	ld	hl,#___str_0
+   0010 01 14 00      [10]   79 	ld	bc,#0x0014
+   0013 C5            [11]   80 	push	bc
+   0014 E5            [11]   81 	push	hl
+   0015 CDr00r00      [17]   82 	call	_LCD_DispString
+   0018 F1            [10]   83 	pop	af
+   0019 F1            [10]   84 	pop	af
+                             85 ;test.c:24: SIO_SendString("Z80 Alive...\r\n", 14);
+   001A 21r8Er00      [10]   86 	ld	hl,#___str_1
+   001D 01 0E 00      [10]   87 	ld	bc,#0x000E
+   0020 C5            [11]   88 	push	bc
+   0021 E5            [11]   89 	push	hl
+   0022 CDr00r00      [17]   90 	call	_SIO_SendString
+   0025 F1            [10]   91 	pop	af
+   0026 F1            [10]   92 	pop	af
+                             93 ;test.c:25: x = SIO_A_CMD;
+   0027 DB 41         [11]   94 	in	a,(_SIO_A_CMD)
+   0029 67            [ 4]   95 	ld	h,a
+                             96 ;test.c:26: LCD_ShowBin(x);		
+   002A E5            [11]   97 	push	hl
+   002B E5            [11]   98 	push	hl
+   002C 33            [ 6]   99 	inc	sp
+   002D CDr00r00      [17]  100 	call	_LCD_ShowBin
+   0030 33            [ 6]  101 	inc	sp
+   0031 E1            [10]  102 	pop	hl
+                            103 ;test.c:28: if((x & 0x01) == 1) {
+   0032 7C            [ 4]  104 	ld	a,h
+   0033 E6 01         [ 7]  105 	and	a, #0x01
+   0035 3D            [ 4]  106 	dec	a
+   0036 20 27         [12]  107 	jr	NZ,00102$
+                            108 ;test.c:30: SIO_SendString("Received character: ", 20);	
+   0038 21r9Dr00      [10]  109 	ld	hl,#___str_2
+   003B 01 14 00      [10]  110 	ld	bc,#0x0014
+   003E C5            [11]  111 	push	bc
+   003F E5            [11]  112 	push	hl
+   0040 CDr00r00      [17]  113 	call	_SIO_SendString
+   0043 F1            [10]  114 	pop	af
+   0044 F1            [10]  115 	pop	af
+                            116 ;test.c:31: SIO_SendChar(SIO_A_DATA);
+   0045 DB 40         [11]  117 	in	a,(_SIO_A_DATA)
+   0047 DB 40         [11]  118 	in	a,(_SIO_A_DATA)
+   0049 F5            [11]  119 	push	af
+   004A 33            [ 6]  120 	inc	sp
+   004B CDr00r00      [17]  121 	call	_SIO_SendChar
+   004E 33            [ 6]  122 	inc	sp
+                            123 ;test.c:32: SIO_SendChar('\r');
+   004F 3E 0D         [ 7]  124 	ld	a,#0x0D
+   0051 F5            [11]  125 	push	af
+   0052 33            [ 6]  126 	inc	sp
+   0053 CDr00r00      [17]  127 	call	_SIO_SendChar
+   0056 33            [ 6]  128 	inc	sp
+                            129 ;test.c:33: SIO_SendChar('\n');
+   0057 3E 0A         [ 7]  130 	ld	a,#0x0A
+   0059 F5            [11]  131 	push	af
+   005A 33            [ 6]  132 	inc	sp
+   005B CDr00r00      [17]  133 	call	_SIO_SendChar
+   005E 33            [ 6]  134 	inc	sp
+   005F                     135 00102$:
+                            136 ;test.c:37: PA = 0x55;
+   005F 3E 55         [ 7]  137 	ld	a,#0x55
+   0061 D3 00         [11]  138 	out	(_PA),a
+                            139 ;test.c:38: delay_ms(500);
+   0063 21 F4 01      [10]  140 	ld	hl,#0x01F4
+   0066 E5            [11]  141 	push	hl
+   0067 CDr00r00      [17]  142 	call	_delay_ms
+   006A F1            [10]  143 	pop	af
+                            144 ;test.c:39: PA = 0xAA;
+   006B 3E AA         [ 7]  145 	ld	a,#0xAA
+   006D D3 00         [11]  146 	out	(_PA),a
+                            147 ;test.c:40: delay_ms(500);
+   006F 21 F4 01      [10]  148 	ld	hl,#0x01F4
+   0072 E5            [11]  149 	push	hl
+   0073 CDr00r00      [17]  150 	call	_delay_ms
+   0076 F1            [10]  151 	pop	af
+   0077 18 91         [12]  152 	jr	00104$
+   0079                     153 _main_end::
+   0079                     154 ___str_0:
+   0079 6D 75 20 68 65 20   155 	.ascii "mu he he            "
+        68 65 20 20 20 20
+        20 20 20 20 20 20
+        20 20
+   008D 00                  156 	.db 0x00
+   008E                     157 ___str_1:
+   008E 5A 38 30 20 41 6C   158 	.ascii "Z80 Alive..."
+        69 76 65 2E 2E 2E
+   009A 0D                  159 	.db 0x0D
+   009B 0A                  160 	.db 0x0A
+   009C 00                  161 	.db 0x00
+   009D                     162 ___str_2:
+   009D 52 65 63 65 69 76   163 	.ascii "Received character: "
+        65 64 20 63 68 61
+        72 61 63 74 65 72
+        3A 20
+   00B1 00                  164 	.db 0x00
+                            165 	.area _CODE
+                            166 	.area _INITIALIZER
+                            167 	.area _CABS (ABS)

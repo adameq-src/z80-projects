@@ -1,0 +1,300 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.4.0 #8981 (Apr  5 2014) (MINGW64)
+                              4 ; This file was generated Wed Jul 29 04:18:15 2015
+                              5 ;--------------------------------------------------------
+                              6 	.module z80sio
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _SIO_Init
+                             13 	.globl _SIO_SendChar
+                             14 	.globl _SIO_SendString
+                             15 	.globl _SIO_GetChar
+                             16 	.globl _SIO_DumpMemory
+                             17 ;--------------------------------------------------------
+                             18 ; special function registers
+                             19 ;--------------------------------------------------------
+                     0000    20 _PA	=	0x0000
+                     0001    21 _PA_CONTROL	=	0x0001
+                     0002    22 _PB	=	0x0002
+                     0003    23 _PB_CONTROL	=	0x0003
+                     0040    24 _SIO_A_DATA	=	0x0040
+                     0041    25 _SIO_A_CMD	=	0x0041
+                     0042    26 _SIO_B_DATA	=	0x0042
+                     0043    27 _SIO_B_CMD	=	0x0043
+                     0060    28 _PIO1_8255_PA	=	0x0060
+                     0061    29 _PIO1_8255_PB	=	0x0061
+                     0062    30 _PIO1_8255_PC	=	0x0062
+                     0063    31 _PIO1_8255_CONTROL	=	0x0063
+                     0080    32 _PIO2_8255_PA	=	0x0080
+                     0081    33 _PIO2_8255_PB	=	0x0081
+                     0082    34 _PIO2_8255_PC	=	0x0082
+                     0083    35 _PIO2_8255_CONTROL	=	0x0083
+                     00A0    36 _PIO3_8255_PA	=	0x00a0
+                     00A1    37 _PIO3_8255_PB	=	0x00a1
+                     00A2    38 _PIO3_8255_PC	=	0x00a2
+                     00A3    39 _PIO3_8255_CONTROL	=	0x00a3
+                             40 ;--------------------------------------------------------
+                             41 ; ram data
+                             42 ;--------------------------------------------------------
+                             43 	.area _DATA
+                             44 ;--------------------------------------------------------
+                             45 ; ram data
+                             46 ;--------------------------------------------------------
+                             47 	.area _INITIALIZED
+                             48 ;--------------------------------------------------------
+                             49 ; absolute external ram data
+                             50 ;--------------------------------------------------------
+                             51 	.area _DABS (ABS)
+                             52 ;--------------------------------------------------------
+                             53 ; global & static initialisations
+                             54 ;--------------------------------------------------------
+                             55 	.area _HOME
+                             56 	.area _GSINIT
+                             57 	.area _GSFINAL
+                             58 	.area _GSINIT
+                             59 ;--------------------------------------------------------
+                             60 ; Home
+                             61 ;--------------------------------------------------------
+                             62 	.area _HOME
+                             63 	.area _HOME
+                             64 ;--------------------------------------------------------
+                             65 ; code
+                             66 ;--------------------------------------------------------
+                             67 	.area _CODE
+                             68 ;src\z80sio.c:4: void SIO_Init(void)
+                             69 ;	---------------------------------
+                             70 ; Function SIO_Init
+                             71 ; ---------------------------------
+   0000                      72 _SIO_Init_start::
+   0000                      73 _SIO_Init:
+                             74 ;src\z80sio.c:8: SIO_A_CMD = 0x30;
+   0000 3E 30         [ 7]   75 	ld	a,#0x30
+   0002 D3 41         [11]   76 	out	(_SIO_A_CMD),a
+                             77 ;src\z80sio.c:11: SIO_A_CMD = 0x18;
+   0004 3E 18         [ 7]   78 	ld	a,#0x18
+   0006 D3 41         [11]   79 	out	(_SIO_A_CMD),a
+                             80 ;src\z80sio.c:16: SIO_A_CMD = 0x04;
+   0008 3E 04         [ 7]   81 	ld	a,#0x04
+   000A D3 41         [11]   82 	out	(_SIO_A_CMD),a
+                             83 ;src\z80sio.c:19: SIO_A_CMD = 0x44;
+   000C 3E 44         [ 7]   84 	ld	a,#0x44
+   000E D3 41         [11]   85 	out	(_SIO_A_CMD),a
+                             86 ;src\z80sio.c:24: SIO_A_CMD = 0x05;
+   0010 3E 05         [ 7]   87 	ld	a,#0x05
+   0012 D3 41         [11]   88 	out	(_SIO_A_CMD),a
+                             89 ;src\z80sio.c:27: SIO_A_CMD = 0xE8;
+   0014 3E E8         [ 7]   90 	ld	a,#0xE8
+   0016 D3 41         [11]   91 	out	(_SIO_A_CMD),a
+                             92 ;src\z80sio.c:32: SIO_A_CMD = 0x01;
+   0018 3E 01         [ 7]   93 	ld	a,#0x01
+   001A D3 41         [11]   94 	out	(_SIO_A_CMD),a
+                             95 ;src\z80sio.c:35: SIO_A_CMD = 0x00;//0x04;
+   001C 3E 00         [ 7]   96 	ld	a,#0x00
+   001E D3 41         [11]   97 	out	(_SIO_A_CMD),a
+                             98 ;src\z80sio.c:39: SIO_A_CMD = 0x02;
+   0020 3E 02         [ 7]   99 	ld	a,#0x02
+   0022 D3 41         [11]  100 	out	(_SIO_A_CMD),a
+                            101 ;src\z80sio.c:42: SIO_A_CMD = 0x00;
+   0024 3E 00         [ 7]  102 	ld	a,#0x00
+   0026 D3 41         [11]  103 	out	(_SIO_A_CMD),a
+                            104 ;src\z80sio.c:47: SIO_A_CMD = 0x03;	
+   0028 3E 03         [ 7]  105 	ld	a,#0x03
+   002A D3 41         [11]  106 	out	(_SIO_A_CMD),a
+                            107 ;src\z80sio.c:50: SIO_A_CMD = 0xC1;
+   002C 3E C1         [ 7]  108 	ld	a,#0xC1
+   002E D3 41         [11]  109 	out	(_SIO_A_CMD),a
+   0030 C9            [10]  110 	ret
+   0031                     111 _SIO_Init_end::
+                            112 ;src\z80sio.c:54: void SIO_SendChar(char ch)
+                            113 ;	---------------------------------
+                            114 ; Function SIO_SendChar
+                            115 ; ---------------------------------
+   0031                     116 _SIO_SendChar_start::
+   0031                     117 _SIO_SendChar:
+                            118 ;src\z80sio.c:56: char status = 0;
+   0031 16 00         [ 7]  119 	ld	d,#0x00
+                            120 ;src\z80sio.c:58: SIO_A_DATA = ch;
+   0033 21 02 00      [10]  121 	ld	hl, #2+0
+   0036 39            [11]  122 	add	hl, sp
+   0037 7E            [ 7]  123 	ld	a, (hl)
+   0038 D3 40         [11]  124 	out	(_SIO_A_DATA),a
+                            125 ;src\z80sio.c:60: while((status & 0x01) == 0)
+   003A                     126 00101$:
+   003A 7A            [ 4]  127 	ld	a,d
+   003B 0F            [ 4]  128 	rrca
+   003C D8            [11]  129 	ret	C
+                            130 ;src\z80sio.c:62: SIO_A_CMD = 0x01; //select RR1
+   003D 3E 01         [ 7]  131 	ld	a,#0x01
+   003F D3 41         [11]  132 	out	(_SIO_A_CMD),a
+                            133 ;src\z80sio.c:63: status = SIO_A_CMD;
+   0041 DB 41         [11]  134 	in	a,(_SIO_A_CMD)
+   0043 57            [ 4]  135 	ld	d,a
+   0044 18 F4         [12]  136 	jr	00101$
+   0046 C9            [10]  137 	ret
+   0047                     138 _SIO_SendChar_end::
+                            139 ;src\z80sio.c:68: void SIO_SendString(char * string, int charCnt)
+                            140 ;	---------------------------------
+                            141 ; Function SIO_SendString
+                            142 ; ---------------------------------
+   0047                     143 _SIO_SendString_start::
+   0047                     144 _SIO_SendString:
+                            145 ;src\z80sio.c:72: for (i = 0; i < charCnt; i++)
+   0047 11 00 00      [10]  146 	ld	de,#0x0000
+   004A                     147 00103$:
+   004A 21 04 00      [10]  148 	ld	hl,#4
+   004D 39            [11]  149 	add	hl,sp
+   004E 7B            [ 4]  150 	ld	a,e
+   004F 96            [ 7]  151 	sub	a, (hl)
+   0050 7A            [ 4]  152 	ld	a,d
+   0051 23            [ 6]  153 	inc	hl
+   0052 9E            [ 7]  154 	sbc	a, (hl)
+   0053 E2r58r00      [10]  155 	jp	PO, 00116$
+   0056 EE 80         [ 7]  156 	xor	a, #0x80
+   0058                     157 00116$:
+   0058 F0            [11]  158 	ret	P
+                            159 ;src\z80sio.c:74: SIO_SendChar(string[i]);
+   0059 21 02 00      [10]  160 	ld	hl, #2
+   005C 39            [11]  161 	add	hl, sp
+   005D 7E            [ 7]  162 	ld	a, (hl)
+   005E 23            [ 6]  163 	inc	hl
+   005F 66            [ 7]  164 	ld	h, (hl)
+   0060 6F            [ 4]  165 	ld	l, a
+   0061 19            [11]  166 	add	hl,de
+   0062 66            [ 7]  167 	ld	h,(hl)
+   0063 D5            [11]  168 	push	de
+   0064 E5            [11]  169 	push	hl
+   0065 33            [ 6]  170 	inc	sp
+   0066 CDr31r00      [17]  171 	call	_SIO_SendChar
+   0069 33            [ 6]  172 	inc	sp
+   006A D1            [10]  173 	pop	de
+                            174 ;src\z80sio.c:72: for (i = 0; i < charCnt; i++)
+   006B 13            [ 6]  175 	inc	de
+   006C 18 DC         [12]  176 	jr	00103$
+   006E C9            [10]  177 	ret
+   006F                     178 _SIO_SendString_end::
+                            179 ;src\z80sio.c:79: unsigned char SIO_GetChar(void)
+                            180 ;	---------------------------------
+                            181 ; Function SIO_GetChar
+                            182 ; ---------------------------------
+   006F                     183 _SIO_GetChar_start::
+   006F                     184 _SIO_GetChar:
+                            185 ;src\z80sio.c:81: char status = 0;
+   006F 3E 00         [ 7]  186 	ld	a,#0x00
+                            187 ;src\z80sio.c:83: while((status & 0x01) == 0)
+   0071                     188 00101$:
+   0071 0F            [ 4]  189 	rrca
+   0072 38 08         [12]  190 	jr	C,00103$
+                            191 ;src\z80sio.c:85: SIO_A_CMD = 0x00; //select RR0
+   0074 3E 00         [ 7]  192 	ld	a,#0x00
+   0076 D3 41         [11]  193 	out	(_SIO_A_CMD),a
+                            194 ;src\z80sio.c:86: status = SIO_A_CMD;
+   0078 DB 41         [11]  195 	in	a,(_SIO_A_CMD)
+   007A 18 F5         [12]  196 	jr	00101$
+   007C                     197 00103$:
+                            198 ;src\z80sio.c:89: status = SIO_A_DATA;
+   007C DB 40         [11]  199 	in	a,(_SIO_A_DATA)
+                            200 ;src\z80sio.c:91: return status;
+   007E 6F            [ 4]  201 	ld	l,a
+   007F C9            [10]  202 	ret
+   0080                     203 _SIO_GetChar_end::
+                            204 ;src\z80sio.c:94: void SIO_DumpMemory(unsigned int startAddress, unsigned int byteCount)
+                            205 ;	---------------------------------
+                            206 ; Function SIO_DumpMemory
+                            207 ; ---------------------------------
+   0080                     208 _SIO_DumpMemory_start::
+   0080                     209 _SIO_DumpMemory:
+   0080 DD E5         [15]  210 	push	ix
+   0082 DD 21 00 00   [14]  211 	ld	ix,#0
+   0086 DD 39         [15]  212 	add	ix,sp
+                            213 ;src\z80sio.c:104: unsigned char *mem = (unsigned char *) (startAddress);
+   0088 DD 5E 04      [19]  214 	ld	e,4 (ix)
+   008B DD 56 05      [19]  215 	ld	d,5 (ix)
+                            216 ;src\z80sio.c:106: for(i = 0; i < byteCount; i++) {
+   008E 01 00 00      [10]  217 	ld	bc,#0x0000
+   0091                     218 00106$:
+   0091 61            [ 4]  219 	ld	h,c
+   0092 68            [ 4]  220 	ld	l,b
+   0093 7C            [ 4]  221 	ld	a,h
+   0094 DD 96 06      [19]  222 	sub	a, 6 (ix)
+   0097 7D            [ 4]  223 	ld	a,l
+   0098 DD 9E 07      [19]  224 	sbc	a, 7 (ix)
+   009B 30 4A         [12]  225 	jr	NC,00104$
+                            226 ;src\z80sio.c:107: if(((i % 8) == 0) && (i > 1)) {
+   009D C5            [11]  227 	push	bc
+   009E D5            [11]  228 	push	de
+   009F 21 08 00      [10]  229 	ld	hl,#0x0008
+   00A2 E5            [11]  230 	push	hl
+   00A3 C5            [11]  231 	push	bc
+   00A4 CDr00r00      [17]  232 	call	__modsint_rrx_s
+   00A7 F1            [10]  233 	pop	af
+   00A8 F1            [10]  234 	pop	af
+   00A9 D1            [10]  235 	pop	de
+   00AA C1            [10]  236 	pop	bc
+   00AB 7C            [ 4]  237 	ld	a,h
+   00AC B5            [ 4]  238 	or	a,l
+   00AD 20 1F         [12]  239 	jr	NZ,00102$
+   00AF 3E 01         [ 7]  240 	ld	a,#0x01
+   00B1 B9            [ 4]  241 	cp	a, c
+   00B2 3E 00         [ 7]  242 	ld	a,#0x00
+   00B4 98            [ 4]  243 	sbc	a, b
+   00B5 E2rBAr00      [10]  244 	jp	PO, 00127$
+   00B8 EE 80         [ 7]  245 	xor	a, #0x80
+   00BA                     246 00127$:
+   00BA F2rCEr00      [10]  247 	jp	P,00102$
+                            248 ;src\z80sio.c:108: SIO_SendString("\r\n", 2);
+   00BD C5            [11]  249 	push	bc
+   00BE D5            [11]  250 	push	de
+   00BF 21 02 00      [10]  251 	ld	hl,#0x0002
+   00C2 E5            [11]  252 	push	hl
+   00C3 21rF7r00      [10]  253 	ld	hl,#___str_0
+   00C6 E5            [11]  254 	push	hl
+   00C7 CDr47r00      [17]  255 	call	_SIO_SendString
+   00CA F1            [10]  256 	pop	af
+   00CB F1            [10]  257 	pop	af
+   00CC D1            [10]  258 	pop	de
+   00CD C1            [10]  259 	pop	bc
+   00CE                     260 00102$:
+                            261 ;src\z80sio.c:113: SIO_SendChar(*(mem + i));
+   00CE 6B            [ 4]  262 	ld	l, e
+   00CF 62            [ 4]  263 	ld	h, d
+   00D0 09            [11]  264 	add	hl,bc
+   00D1 7E            [ 7]  265 	ld	a,(hl)
+   00D2 C5            [11]  266 	push	bc
+   00D3 D5            [11]  267 	push	de
+   00D4 F5            [11]  268 	push	af
+   00D5 33            [ 6]  269 	inc	sp
+   00D6 CDr31r00      [17]  270 	call	_SIO_SendChar
+   00D9 33            [ 6]  271 	inc	sp
+   00DA 3E 20         [ 7]  272 	ld	a,#0x20
+   00DC F5            [11]  273 	push	af
+   00DD 33            [ 6]  274 	inc	sp
+   00DE CDr31r00      [17]  275 	call	_SIO_SendChar
+   00E1 33            [ 6]  276 	inc	sp
+   00E2 D1            [10]  277 	pop	de
+   00E3 C1            [10]  278 	pop	bc
+                            279 ;src\z80sio.c:106: for(i = 0; i < byteCount; i++) {
+   00E4 03            [ 6]  280 	inc	bc
+   00E5 18 AA         [12]  281 	jr	00106$
+   00E7                     282 00104$:
+                            283 ;src\z80sio.c:117: SIO_SendString("\r\n", 2);
+   00E7 21rF7r00      [10]  284 	ld	hl,#___str_0
+   00EA 01 02 00      [10]  285 	ld	bc,#0x0002
+   00ED C5            [11]  286 	push	bc
+   00EE E5            [11]  287 	push	hl
+   00EF CDr47r00      [17]  288 	call	_SIO_SendString
+   00F2 F1            [10]  289 	pop	af
+   00F3 F1            [10]  290 	pop	af
+   00F4 DD E1         [14]  291 	pop	ix
+   00F6 C9            [10]  292 	ret
+   00F7                     293 _SIO_DumpMemory_end::
+   00F7                     294 ___str_0:
+   00F7 0D                  295 	.db 0x0D
+   00F8 0A                  296 	.db 0x0A
+   00F9 00                  297 	.db 0x00
+                            298 	.area _CODE
+                            299 	.area _INITIALIZER
+                            300 	.area _CABS (ABS)

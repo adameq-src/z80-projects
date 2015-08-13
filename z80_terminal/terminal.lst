@@ -1,0 +1,677 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.4.0 #8981 (Apr  5 2014) (MINGW64)
+                              4 ; This file was generated Wed Jul 29 04:18:16 2015
+                              5 ;--------------------------------------------------------
+                              6 	.module terminal
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _main
+                             13 	.globl _SIO_DumpMemory
+                             14 	.globl _SIO_SendString
+                             15 	.globl _SIO_GetChar
+                             16 	.globl _SIO_SendChar
+                             17 	.globl _SIO_Init
+                             18 	.globl _LCD_ClearScreen
+                             19 	.globl _LCD_DispString
+                             20 	.globl _LCD_Init
+                             21 	.globl _LCD_ShowBin
+                             22 	.globl _writeBufferToMemory
+                             23 	.globl _readByteFromMemory
+                             24 	.globl _writeByteToMemory
+                             25 	.globl _charToHexStr
+                             26 	.globl _delay_ms
+                             27 	.globl _getUserInputData
+                             28 	.globl _getUserInputAddress
+                             29 ;--------------------------------------------------------
+                             30 ; special function registers
+                             31 ;--------------------------------------------------------
+                     0000    32 _PA	=	0x0000
+                     0001    33 _PA_CONTROL	=	0x0001
+                     0002    34 _PB	=	0x0002
+                     0003    35 _PB_CONTROL	=	0x0003
+                     0040    36 _SIO_A_DATA	=	0x0040
+                     0041    37 _SIO_A_CMD	=	0x0041
+                     0042    38 _SIO_B_DATA	=	0x0042
+                     0043    39 _SIO_B_CMD	=	0x0043
+                     0060    40 _PIO1_8255_PA	=	0x0060
+                     0061    41 _PIO1_8255_PB	=	0x0061
+                     0062    42 _PIO1_8255_PC	=	0x0062
+                     0063    43 _PIO1_8255_CONTROL	=	0x0063
+                     0080    44 _PIO2_8255_PA	=	0x0080
+                     0081    45 _PIO2_8255_PB	=	0x0081
+                     0082    46 _PIO2_8255_PC	=	0x0082
+                     0083    47 _PIO2_8255_CONTROL	=	0x0083
+                     00A0    48 _PIO3_8255_PA	=	0x00a0
+                     00A1    49 _PIO3_8255_PB	=	0x00a1
+                     00A2    50 _PIO3_8255_PC	=	0x00a2
+                     00A3    51 _PIO3_8255_CONTROL	=	0x00a3
+                             52 ;--------------------------------------------------------
+                             53 ; ram data
+                             54 ;--------------------------------------------------------
+                             55 	.area _DATA
+                             56 ;--------------------------------------------------------
+                             57 ; ram data
+                             58 ;--------------------------------------------------------
+                             59 	.area _INITIALIZED
+                             60 ;--------------------------------------------------------
+                             61 ; absolute external ram data
+                             62 ;--------------------------------------------------------
+                             63 	.area _DABS (ABS)
+                             64 ;--------------------------------------------------------
+                             65 ; global & static initialisations
+                             66 ;--------------------------------------------------------
+                             67 	.area _HOME
+                             68 	.area _GSINIT
+                             69 	.area _GSFINAL
+                             70 	.area _GSINIT
+                             71 ;--------------------------------------------------------
+                             72 ; Home
+                             73 ;--------------------------------------------------------
+                             74 	.area _HOME
+                             75 	.area _HOME
+                             76 ;--------------------------------------------------------
+                             77 ; code
+                             78 ;--------------------------------------------------------
+                             79 	.area _CODE
+                             80 ;src\terminal.c:9: int main(void)
+                             81 ;	---------------------------------
+                             82 ; Function main
+                             83 ; ---------------------------------
+   0000                      84 _main_start::
+   0000                      85 _main:
+   0000 DD E5         [15]   86 	push	ix
+   0002 F5            [11]   87 	push	af
+                             88 ;src\terminal.c:18: LCD_Init();
+   0003 CDr00r00      [17]   89 	call	_LCD_Init
+                             90 ;src\terminal.c:19: SIO_Init();
+   0006 CDr00r00      [17]   91 	call	_SIO_Init
+                             92 ;src\terminal.c:22: PA_CONTROL = 0x0F;
+   0009 3E 0F         [ 7]   93 	ld	a,#0x0F
+   000B D3 01         [11]   94 	out	(_PA_CONTROL),a
+                             95 ;src\terminal.c:25: PIO1_8255_CONTROL = 0x80;
+   000D 3E 80         [ 7]   96 	ld	a,#0x80
+   000F D3 63         [11]   97 	out	(_PIO1_8255_CONTROL),a
+                             98 ;src\terminal.c:26: PIO2_8255_CONTROL = 0x80;
+   0011 3E 80         [ 7]   99 	ld	a,#0x80
+   0013 D3 83         [11]  100 	out	(_PIO2_8255_CONTROL),a
+                            101 ;src\terminal.c:27: PIO3_8255_CONTROL = 0x80;
+   0015 3E 80         [ 7]  102 	ld	a,#0x80
+   0017 D3 A3         [11]  103 	out	(_PIO3_8255_CONTROL),a
+                            104 ;src\terminal.c:29: while(1) {
+   0019 01 00 00      [10]  105 	ld	bc,#0x0000
+   001C                     106 00127$:
+                            107 ;src\terminal.c:30: LCD_ClearScreen();
+   001C C5            [11]  108 	push	bc
+   001D CDr00r00      [17]  109 	call	_LCD_ClearScreen
+   0020 C1            [10]  110 	pop	bc
+                            111 ;src\terminal.c:31: LCD_DispString("mu he he            ", 20);
+   0021 21rDCr01      [10]  112 	ld	hl,#___str_0
+   0024 C5            [11]  113 	push	bc
+   0025 11 14 00      [10]  114 	ld	de,#0x0014
+   0028 D5            [11]  115 	push	de
+   0029 E5            [11]  116 	push	hl
+   002A CDr00r00      [17]  117 	call	_LCD_DispString
+   002D F1            [10]  118 	pop	af
+   002E F1            [10]  119 	pop	af
+   002F C1            [10]  120 	pop	bc
+                            121 ;src\terminal.c:33: SIO_SendString("Z80 Alive...\r\n", 14);
+   0030 21rF1r01      [10]  122 	ld	hl,#___str_1
+   0033 C5            [11]  123 	push	bc
+   0034 11 0E 00      [10]  124 	ld	de,#0x000E
+   0037 D5            [11]  125 	push	de
+   0038 E5            [11]  126 	push	hl
+   0039 CDr00r00      [17]  127 	call	_SIO_SendString
+   003C F1            [10]  128 	pop	af
+   003D F1            [10]  129 	pop	af
+   003E C1            [10]  130 	pop	bc
+                            131 ;src\terminal.c:34: x = SIO_A_CMD;
+   003F DB 41         [11]  132 	in	a,(_SIO_A_CMD)
+   0041 67            [ 4]  133 	ld	h,a
+                            134 ;src\terminal.c:35: LCD_ShowBin(x);		
+   0042 E5            [11]  135 	push	hl
+   0043 C5            [11]  136 	push	bc
+   0044 E5            [11]  137 	push	hl
+   0045 33            [ 6]  138 	inc	sp
+   0046 CDr00r00      [17]  139 	call	_LCD_ShowBin
+   0049 33            [ 6]  140 	inc	sp
+   004A C1            [10]  141 	pop	bc
+   004B E1            [10]  142 	pop	hl
+                            143 ;src\terminal.c:37: if((x & SIO_DATA_READY) == 1) {
+   004C 7C            [ 4]  144 	ld	a,h
+   004D E6 01         [ 7]  145 	and	a, #0x01
+   004F 3D            [ 4]  146 	dec	a
+   0050 C2r38r01      [10]  147 	jp	NZ,00109$
+                            148 ;src\terminal.c:39: recv = SIO_A_DATA;
+   0053 DB 40         [11]  149 	in	a,(_SIO_A_DATA)
+   0055 57            [ 4]  150 	ld	d,a
+                            151 ;src\terminal.c:40: SIO_SendString("Received character: ", 20);	
+   0056 C5            [11]  152 	push	bc
+   0057 D5            [11]  153 	push	de
+   0058 21 14 00      [10]  154 	ld	hl,#0x0014
+   005B E5            [11]  155 	push	hl
+   005C 21r00r02      [10]  156 	ld	hl,#___str_2
+   005F E5            [11]  157 	push	hl
+   0060 CDr00r00      [17]  158 	call	_SIO_SendString
+   0063 F1            [10]  159 	pop	af
+   0064 F1            [10]  160 	pop	af
+   0065 D1            [10]  161 	pop	de
+   0066 D5            [11]  162 	push	de
+   0067 D5            [11]  163 	push	de
+   0068 33            [ 6]  164 	inc	sp
+   0069 CDr00r00      [17]  165 	call	_SIO_SendChar
+   006C 33            [ 6]  166 	inc	sp
+   006D 3E 20         [ 7]  167 	ld	a,#0x20
+   006F F5            [11]  168 	push	af
+   0070 33            [ 6]  169 	inc	sp
+   0071 CDr00r00      [17]  170 	call	_SIO_SendChar
+   0074 33            [ 6]  171 	inc	sp
+   0075 D1            [10]  172 	pop	de
+   0076 C1            [10]  173 	pop	bc
+                            174 ;src\terminal.c:44: charToHexStr(recv, buf);
+   0077 21 00 00      [10]  175 	ld	hl,#0x0000
+   007A 39            [11]  176 	add	hl,sp
+   007B E5            [11]  177 	push	hl
+   007C FD E1         [14]  178 	pop	iy
+   007E E5            [11]  179 	push	hl
+   007F C5            [11]  180 	push	bc
+   0080 D5            [11]  181 	push	de
+   0081 FD E5         [15]  182 	push	iy
+   0083 D5            [11]  183 	push	de
+   0084 33            [ 6]  184 	inc	sp
+   0085 CDr00r00      [17]  185 	call	_charToHexStr
+   0088 F1            [10]  186 	pop	af
+   0089 33            [ 6]  187 	inc	sp
+   008A D1            [10]  188 	pop	de
+   008B C1            [10]  189 	pop	bc
+   008C FD E1         [14]  190 	pop	iy
+   008E C5            [11]  191 	push	bc
+   008F D5            [11]  192 	push	de
+   0090 21 02 00      [10]  193 	ld	hl,#0x0002
+   0093 E5            [11]  194 	push	hl
+   0094 FD E5         [15]  195 	push	iy
+   0096 CDr00r00      [17]  196 	call	_SIO_SendString
+   0099 F1            [10]  197 	pop	af
+   009A 26 0D         [ 7]  198 	ld	h,#0x0D
+   009C E3            [19]  199 	ex	(sp),hl
+   009D 33            [ 6]  200 	inc	sp
+   009E CDr00r00      [17]  201 	call	_SIO_SendChar
+   00A1 33            [ 6]  202 	inc	sp
+   00A2 3E 0A         [ 7]  203 	ld	a,#0x0A
+   00A4 F5            [11]  204 	push	af
+   00A5 33            [ 6]  205 	inc	sp
+   00A6 CDr00r00      [17]  206 	call	_SIO_SendChar
+   00A9 33            [ 6]  207 	inc	sp
+   00AA D1            [10]  208 	pop	de
+   00AB C1            [10]  209 	pop	bc
+                            210 ;src\terminal.c:50: switch(recv) {
+   00AC 7A            [ 4]  211 	ld	a,d
+   00AD FE 44         [ 7]  212 	cp	a,#0x44
+   00AF 28 12         [12]  213 	jr	Z,00101$
+   00B1 FE 61         [ 7]  214 	cp	a,#0x61
+   00B3 28 3D         [12]  215 	jr	Z,00103$
+   00B5 FE 71         [ 7]  216 	cp	a,#0x71
+   00B7 28 2F         [12]  217 	jr	Z,00102$
+   00B9 FE 72         [ 7]  218 	cp	a,#0x72
+   00BB 28 59         [12]  219 	jr	Z,00105$
+   00BD D6 77         [ 7]  220 	sub	a, #0x77
+   00BF 28 3B         [12]  221 	jr	Z,00104$
+   00C1 18 66         [12]  222 	jr	00106$
+                            223 ;src\terminal.c:51: case 'D':
+   00C3                     224 00101$:
+                            225 ;src\terminal.c:52: writeBufferToMemory(0x4064, "JOU", 3);
+   00C3 21r15r02      [10]  226 	ld	hl,#___str_3+0
+   00C6 C5            [11]  227 	push	bc
+   00C7 11 03 00      [10]  228 	ld	de,#0x0003
+   00CA D5            [11]  229 	push	de
+   00CB E5            [11]  230 	push	hl
+   00CC 21 64 40      [10]  231 	ld	hl,#0x4064
+   00CF E5            [11]  232 	push	hl
+   00D0 CDr00r00      [17]  233 	call	_writeBufferToMemory
+   00D3 21 06 00      [10]  234 	ld	hl,#6
+   00D6 39            [11]  235 	add	hl,sp
+   00D7 F9            [ 6]  236 	ld	sp,hl
+   00D8 21 80 00      [10]  237 	ld	hl,#0x0080
+   00DB E5            [11]  238 	push	hl
+   00DC 21 00 40      [10]  239 	ld	hl,#0x4000
+   00DF E5            [11]  240 	push	hl
+   00E0 CDr00r00      [17]  241 	call	_SIO_DumpMemory
+   00E3 F1            [10]  242 	pop	af
+   00E4 F1            [10]  243 	pop	af
+   00E5 C1            [10]  244 	pop	bc
+                            245 ;src\terminal.c:54: break;
+   00E6 18 50         [12]  246 	jr	00109$
+                            247 ;src\terminal.c:56: case 'q':
+   00E8                     248 00102$:
+                            249 ;src\terminal.c:57: PIO3_8255_PB = 0xFF;
+   00E8 3E FF         [ 7]  250 	ld	a,#0xFF
+   00EA D3 A1         [11]  251 	out	(_PIO3_8255_PB),a
+                            252 ;src\terminal.c:58: PIO2_8255_PB = 0x00;
+   00EC 3E 00         [ 7]  253 	ld	a,#0x00
+   00EE D3 81         [11]  254 	out	(_PIO2_8255_PB),a
+                            255 ;src\terminal.c:59: break;
+   00F0 18 46         [12]  256 	jr	00109$
+                            257 ;src\terminal.c:61: case 'a':
+   00F2                     258 00103$:
+                            259 ;src\terminal.c:62: PIO3_8255_PB = 0x00;
+   00F2 3E 00         [ 7]  260 	ld	a,#0x00
+   00F4 D3 A1         [11]  261 	out	(_PIO3_8255_PB),a
+                            262 ;src\terminal.c:63: PIO2_8255_PB = 0xFF;
+   00F6 3E FF         [ 7]  263 	ld	a,#0xFF
+   00F8 D3 81         [11]  264 	out	(_PIO2_8255_PB),a
+                            265 ;src\terminal.c:64: break;
+   00FA 18 3C         [12]  266 	jr	00109$
+                            267 ;src\terminal.c:66: case 'w':
+   00FC                     268 00104$:
+                            269 ;src\terminal.c:67: addr = getUserInputAddress();
+   00FC C5            [11]  270 	push	bc
+   00FD CDrA1r02      [17]  271 	call	_getUserInputAddress
+   0100 C1            [10]  272 	pop	bc
+                            273 ;src\terminal.c:68: data = getUserInputData();
+   0101 E5            [11]  274 	push	hl
+   0102 C5            [11]  275 	push	bc
+   0103 CDr20r02      [17]  276 	call	_getUserInputData
+   0106 5D            [ 4]  277 	ld	e,l
+   0107 C1            [10]  278 	pop	bc
+   0108 E1            [10]  279 	pop	hl
+                            280 ;src\terminal.c:69: writeByteToMemory(addr, data);
+   0109 C5            [11]  281 	push	bc
+   010A 7B            [ 4]  282 	ld	a,e
+   010B F5            [11]  283 	push	af
+   010C 33            [ 6]  284 	inc	sp
+   010D E5            [11]  285 	push	hl
+   010E CDr00r00      [17]  286 	call	_writeByteToMemory
+   0111 F1            [10]  287 	pop	af
+   0112 33            [ 6]  288 	inc	sp
+   0113 C1            [10]  289 	pop	bc
+                            290 ;src\terminal.c:70: break;
+   0114 18 22         [12]  291 	jr	00109$
+                            292 ;src\terminal.c:72: case 'r':
+   0116                     293 00105$:
+                            294 ;src\terminal.c:73: addr = getUserInputAddress();
+   0116 C5            [11]  295 	push	bc
+   0117 CDrA1r02      [17]  296 	call	_getUserInputAddress
+   011A E5            [11]  297 	push	hl
+   011B CDr00r00      [17]  298 	call	_readByteFromMemory
+   011E F1            [10]  299 	pop	af
+   011F 65            [ 4]  300 	ld	h,l
+   0120 E5            [11]  301 	push	hl
+   0121 33            [ 6]  302 	inc	sp
+   0122 CDr00r00      [17]  303 	call	_SIO_SendChar
+   0125 33            [ 6]  304 	inc	sp
+   0126 C1            [10]  305 	pop	bc
+                            306 ;src\terminal.c:76: break;
+   0127 18 0F         [12]  307 	jr	00109$
+                            308 ;src\terminal.c:78: default:
+   0129                     309 00106$:
+                            310 ;src\terminal.c:79: SIO_SendString("WTF?\r\n", 6);
+   0129 21r19r02      [10]  311 	ld	hl,#___str_4+0
+   012C C5            [11]  312 	push	bc
+   012D 11 06 00      [10]  313 	ld	de,#0x0006
+   0130 D5            [11]  314 	push	de
+   0131 E5            [11]  315 	push	hl
+   0132 CDr00r00      [17]  316 	call	_SIO_SendString
+   0135 F1            [10]  317 	pop	af
+   0136 F1            [10]  318 	pop	af
+   0137 C1            [10]  319 	pop	bc
+                            320 ;src\terminal.c:81: }
+   0138                     321 00109$:
+                            322 ;src\terminal.c:86: PA = 0x55;
+   0138 3E 55         [ 7]  323 	ld	a,#0x55
+   013A D3 00         [11]  324 	out	(_PA),a
+                            325 ;src\terminal.c:88: delay_ms(500);
+   013C C5            [11]  326 	push	bc
+   013D 21 F4 01      [10]  327 	ld	hl,#0x01F4
+   0140 E5            [11]  328 	push	hl
+   0141 CDr00r00      [17]  329 	call	_delay_ms
+   0144 F1            [10]  330 	pop	af
+   0145 C1            [10]  331 	pop	bc
+                            332 ;src\terminal.c:89: PA = 0xAA;
+   0146 3E AA         [ 7]  333 	ld	a,#0xAA
+   0148 D3 00         [11]  334 	out	(_PA),a
+                            335 ;src\terminal.c:91: delay_ms(500);
+   014A C5            [11]  336 	push	bc
+   014B 21 F4 01      [10]  337 	ld	hl,#0x01F4
+   014E E5            [11]  338 	push	hl
+   014F CDr00r00      [17]  339 	call	_delay_ms
+   0152 F1            [10]  340 	pop	af
+   0153 C1            [10]  341 	pop	bc
+                            342 ;src\terminal.c:94: if(i%17 == 0) {
+   0154 C5            [11]  343 	push	bc
+   0155 21 11 00      [10]  344 	ld	hl,#0x0011
+   0158 E5            [11]  345 	push	hl
+   0159 C5            [11]  346 	push	bc
+   015A CDr00r00      [17]  347 	call	__modsint_rrx_s
+   015D F1            [10]  348 	pop	af
+   015E F1            [10]  349 	pop	af
+   015F C1            [10]  350 	pop	bc
+   0160 7C            [ 4]  351 	ld	a,h
+   0161 B5            [ 4]  352 	or	a,l
+   0162 20 06         [12]  353 	jr	NZ,00116$
+                            354 ;src\terminal.c:95: PIO1_8255_PB = 0x08;
+   0164 3E 08         [ 7]  355 	ld	a,#0x08
+   0166 D3 61         [11]  356 	out	(_PIO1_8255_PB),a
+   0168 18 2A         [12]  357 	jr	00117$
+   016A                     358 00116$:
+                            359 ;src\terminal.c:96: } else if(i%13 == 0) {
+   016A C5            [11]  360 	push	bc
+   016B 21 0D 00      [10]  361 	ld	hl,#0x000D
+   016E E5            [11]  362 	push	hl
+   016F C5            [11]  363 	push	bc
+   0170 CDr00r00      [17]  364 	call	__modsint_rrx_s
+   0173 F1            [10]  365 	pop	af
+   0174 F1            [10]  366 	pop	af
+   0175 C1            [10]  367 	pop	bc
+   0176 7C            [ 4]  368 	ld	a,h
+   0177 B5            [ 4]  369 	or	a,l
+   0178 20 06         [12]  370 	jr	NZ,00113$
+                            371 ;src\terminal.c:97: PIO2_8255_PB = 0x08;
+   017A 3E 08         [ 7]  372 	ld	a,#0x08
+   017C D3 81         [11]  373 	out	(_PIO2_8255_PB),a
+   017E 18 14         [12]  374 	jr	00117$
+   0180                     375 00113$:
+                            376 ;src\terminal.c:98: } else if(i%11 == 0) {
+   0180 C5            [11]  377 	push	bc
+   0181 21 0B 00      [10]  378 	ld	hl,#0x000B
+   0184 E5            [11]  379 	push	hl
+   0185 C5            [11]  380 	push	bc
+   0186 CDr00r00      [17]  381 	call	__modsint_rrx_s
+   0189 F1            [10]  382 	pop	af
+   018A F1            [10]  383 	pop	af
+   018B C1            [10]  384 	pop	bc
+   018C 7C            [ 4]  385 	ld	a,h
+   018D B5            [ 4]  386 	or	a,l
+   018E 20 04         [12]  387 	jr	NZ,00117$
+                            388 ;src\terminal.c:99: PIO3_8255_PB = 0x08;
+   0190 3E 08         [ 7]  389 	ld	a,#0x08
+   0192 D3 A1         [11]  390 	out	(_PIO3_8255_PB),a
+   0194                     391 00117$:
+                            392 ;src\terminal.c:102: delay_ms(50);
+   0194 C5            [11]  393 	push	bc
+   0195 21 32 00      [10]  394 	ld	hl,#0x0032
+   0198 E5            [11]  395 	push	hl
+   0199 CDr00r00      [17]  396 	call	_delay_ms
+   019C F1            [10]  397 	pop	af
+   019D C1            [10]  398 	pop	bc
+                            399 ;src\terminal.c:104: if(i%23 == 0) {
+   019E C5            [11]  400 	push	bc
+   019F 21 17 00      [10]  401 	ld	hl,#0x0017
+   01A2 E5            [11]  402 	push	hl
+   01A3 C5            [11]  403 	push	bc
+   01A4 CDr00r00      [17]  404 	call	__modsint_rrx_s
+   01A7 F1            [10]  405 	pop	af
+   01A8 F1            [10]  406 	pop	af
+   01A9 C1            [10]  407 	pop	bc
+   01AA 7C            [ 4]  408 	ld	a,h
+                            409 ;src\terminal.c:105: PIO1_8255_PB = 0x00;
+   01AB B5            [ 4]  410 	or	a,l
+   01AC 20 04         [12]  411 	jr	NZ,00124$
+   01AE D3 61         [11]  412 	out	(_PIO1_8255_PB),a
+   01B0 18 26         [12]  413 	jr	00125$
+   01B2                     414 00124$:
+                            415 ;src\terminal.c:106: } else if(i%29 == 0) {
+   01B2 C5            [11]  416 	push	bc
+   01B3 21 1D 00      [10]  417 	ld	hl,#0x001D
+   01B6 E5            [11]  418 	push	hl
+   01B7 C5            [11]  419 	push	bc
+   01B8 CDr00r00      [17]  420 	call	__modsint_rrx_s
+   01BB F1            [10]  421 	pop	af
+   01BC F1            [10]  422 	pop	af
+   01BD C1            [10]  423 	pop	bc
+   01BE 7C            [ 4]  424 	ld	a,h
+                            425 ;src\terminal.c:107: PIO2_8255_PB = 0x00;
+   01BF B5            [ 4]  426 	or	a,l
+   01C0 20 04         [12]  427 	jr	NZ,00121$
+   01C2 D3 81         [11]  428 	out	(_PIO2_8255_PB),a
+   01C4 18 12         [12]  429 	jr	00125$
+   01C6                     430 00121$:
+                            431 ;src\terminal.c:108: } else if(i%31 == 0) {
+   01C6 C5            [11]  432 	push	bc
+   01C7 21 1F 00      [10]  433 	ld	hl,#0x001F
+   01CA E5            [11]  434 	push	hl
+   01CB C5            [11]  435 	push	bc
+   01CC CDr00r00      [17]  436 	call	__modsint_rrx_s
+   01CF F1            [10]  437 	pop	af
+   01D0 F1            [10]  438 	pop	af
+   01D1 C1            [10]  439 	pop	bc
+   01D2 7C            [ 4]  440 	ld	a,h
+                            441 ;src\terminal.c:109: PIO3_8255_PB = 0x00;
+   01D3 B5            [ 4]  442 	or	a,l
+   01D4 20 02         [12]  443 	jr	NZ,00125$
+   01D6 D3 A1         [11]  444 	out	(_PIO3_8255_PB),a
+   01D8                     445 00125$:
+                            446 ;src\terminal.c:112: i++;
+   01D8 03            [ 6]  447 	inc	bc
+   01D9 C3r1Cr00      [10]  448 	jp	00127$
+   01DC                     449 _main_end::
+   01DC                     450 ___str_0:
+   01DC 6D 75 20 68 65 20   451 	.ascii "mu he he            "
+        68 65 20 20 20 20
+        20 20 20 20 20 20
+        20 20
+   01F0 00                  452 	.db 0x00
+   01F1                     453 ___str_1:
+   01F1 5A 38 30 20 41 6C   454 	.ascii "Z80 Alive..."
+        69 76 65 2E 2E 2E
+   01FD 0D                  455 	.db 0x0D
+   01FE 0A                  456 	.db 0x0A
+   01FF 00                  457 	.db 0x00
+   0200                     458 ___str_2:
+   0200 52 65 63 65 69 76   459 	.ascii "Received character: "
+        65 64 20 63 68 61
+        72 61 63 74 65 72
+        3A 20
+   0214 00                  460 	.db 0x00
+   0215                     461 ___str_3:
+   0215 4A 4F 55            462 	.ascii "JOU"
+   0218 00                  463 	.db 0x00
+   0219                     464 ___str_4:
+   0219 57 54 46 3F         465 	.ascii "WTF?"
+   021D 0D                  466 	.db 0x0D
+   021E 0A                  467 	.db 0x0A
+   021F 00                  468 	.db 0x00
+                            469 ;src\terminal.c:119: unsigned char getUserInputData(void)
+                            470 ;	---------------------------------
+                            471 ; Function getUserInputData
+                            472 ; ---------------------------------
+   0220                     473 _getUserInputData_start::
+   0220                     474 _getUserInputData:
+                            475 ;src\terminal.c:124: do {
+   0220                     476 00101$:
+                            477 ;src\terminal.c:125: SIO_SendString("\r\nEnter data:", 13);
+   0220 21r6Fr02      [10]  478 	ld	hl,#___str_5
+   0223 01 0D 00      [10]  479 	ld	bc,#0x000D
+   0226 C5            [11]  480 	push	bc
+   0227 E5            [11]  481 	push	hl
+   0228 CDr00r00      [17]  482 	call	_SIO_SendString
+   022B F1            [10]  483 	pop	af
+   022C F1            [10]  484 	pop	af
+                            485 ;src\terminal.c:126: data = SIO_GetChar();
+   022D CDr00r00      [17]  486 	call	_SIO_GetChar
+                            487 ;src\terminal.c:127: SIO_SendString("\r\nIs the data \"", 15);
+   0230 11r7Dr02      [10]  488 	ld	de,#___str_6
+   0233 E5            [11]  489 	push	hl
+   0234 01 0F 00      [10]  490 	ld	bc,#0x000F
+   0237 C5            [11]  491 	push	bc
+   0238 D5            [11]  492 	push	de
+   0239 CDr00r00      [17]  493 	call	_SIO_SendString
+   023C F1            [10]  494 	pop	af
+   023D F1            [10]  495 	pop	af
+   023E E1            [10]  496 	pop	hl
+                            497 ;src\terminal.c:128: SIO_SendChar(data);
+   023F E5            [11]  498 	push	hl
+   0240 7D            [ 4]  499 	ld	a,l
+   0241 F5            [11]  500 	push	af
+   0242 33            [ 6]  501 	inc	sp
+   0243 CDr00r00      [17]  502 	call	_SIO_SendChar
+   0246 33            [ 6]  503 	inc	sp
+   0247 E1            [10]  504 	pop	hl
+                            505 ;src\terminal.c:129: SIO_SendString("\" correct? [y/n]", 16);
+   0248 11r8Dr02      [10]  506 	ld	de,#___str_7
+   024B E5            [11]  507 	push	hl
+   024C 01 10 00      [10]  508 	ld	bc,#0x0010
+   024F C5            [11]  509 	push	bc
+   0250 D5            [11]  510 	push	de
+   0251 CDr00r00      [17]  511 	call	_SIO_SendString
+   0254 F1            [10]  512 	pop	af
+   0255 F1            [10]  513 	pop	af
+   0256 CDr00r00      [17]  514 	call	_SIO_GetChar
+   0259 7D            [ 4]  515 	ld	a,l
+   025A E1            [10]  516 	pop	hl
+                            517 ;src\terminal.c:131: } while(isCorrect != 'y');
+   025B D6 79         [ 7]  518 	sub	a, #0x79
+   025D 20 C1         [12]  519 	jr	NZ,00101$
+                            520 ;src\terminal.c:133: SIO_SendString("\r\n", 2);
+   025F 11r9Er02      [10]  521 	ld	de,#___str_8+0
+   0262 E5            [11]  522 	push	hl
+   0263 01 02 00      [10]  523 	ld	bc,#0x0002
+   0266 C5            [11]  524 	push	bc
+   0267 D5            [11]  525 	push	de
+   0268 CDr00r00      [17]  526 	call	_SIO_SendString
+   026B F1            [10]  527 	pop	af
+   026C F1            [10]  528 	pop	af
+   026D E1            [10]  529 	pop	hl
+                            530 ;src\terminal.c:135: return data;
+   026E C9            [10]  531 	ret
+   026F                     532 _getUserInputData_end::
+   026F                     533 ___str_5:
+   026F 0D                  534 	.db 0x0D
+   0270 0A                  535 	.db 0x0A
+   0271 45 6E 74 65 72 20   536 	.ascii "Enter data:"
+        64 61 74 61 3A
+   027C 00                  537 	.db 0x00
+   027D                     538 ___str_6:
+   027D 0D                  539 	.db 0x0D
+   027E 0A                  540 	.db 0x0A
+   027F 49 73 20 74 68 65   541 	.ascii "Is the data "
+        20 64 61 74 61 20
+   028B 22                  542 	.db 0x22
+   028C 00                  543 	.db 0x00
+   028D                     544 ___str_7:
+   028D 22                  545 	.db 0x22
+   028E 20 63 6F 72 72 65   546 	.ascii " correct? [y/n]"
+        63 74 3F 20 5B 79
+        2F 6E 5D
+   029D 00                  547 	.db 0x00
+   029E                     548 ___str_8:
+   029E 0D                  549 	.db 0x0D
+   029F 0A                  550 	.db 0x0A
+   02A0 00                  551 	.db 0x00
+                            552 ;src\terminal.c:138: unsigned int getUserInputAddress(void)
+                            553 ;	---------------------------------
+                            554 ; Function getUserInputAddress
+                            555 ; ---------------------------------
+   02A1                     556 _getUserInputAddress_start::
+   02A1                     557 _getUserInputAddress:
+                            558 ;src\terminal.c:144: do {
+   02A1                     559 00101$:
+                            560 ;src\terminal.c:145: SIO_SendString("\r\nEnter address [low, high]:", 28);
+   02A1 21r09r03      [10]  561 	ld	hl,#___str_9
+   02A4 01 1C 00      [10]  562 	ld	bc,#0x001C
+   02A7 C5            [11]  563 	push	bc
+   02A8 E5            [11]  564 	push	hl
+   02A9 CDr00r00      [17]  565 	call	_SIO_SendString
+   02AC F1            [10]  566 	pop	af
+   02AD F1            [10]  567 	pop	af
+                            568 ;src\terminal.c:146: addrl = SIO_GetChar();
+   02AE CDr00r00      [17]  569 	call	_SIO_GetChar
+   02B1 5D            [ 4]  570 	ld	e,l
+                            571 ;src\terminal.c:147: addrh = SIO_GetChar();
+   02B2 D5            [11]  572 	push	de
+   02B3 CDr00r00      [17]  573 	call	_SIO_GetChar
+   02B6 D1            [10]  574 	pop	de
+   02B7 55            [ 4]  575 	ld	d,l
+                            576 ;src\terminal.c:149: SIO_SendString("\r\nIs the address \"", 18);
+   02B8 21r26r03      [10]  577 	ld	hl,#___str_10
+   02BB D5            [11]  578 	push	de
+   02BC 01 12 00      [10]  579 	ld	bc,#0x0012
+   02BF C5            [11]  580 	push	bc
+   02C0 E5            [11]  581 	push	hl
+   02C1 CDr00r00      [17]  582 	call	_SIO_SendString
+   02C4 F1            [10]  583 	pop	af
+   02C5 F1            [10]  584 	pop	af
+   02C6 D1            [10]  585 	pop	de
+                            586 ;src\terminal.c:150: SIO_SendChar(addrh);
+   02C7 D5            [11]  587 	push	de
+   02C8 D5            [11]  588 	push	de
+   02C9 33            [ 6]  589 	inc	sp
+   02CA CDr00r00      [17]  590 	call	_SIO_SendChar
+   02CD 33            [ 6]  591 	inc	sp
+   02CE D1            [10]  592 	pop	de
+                            593 ;src\terminal.c:151: SIO_SendChar(addrl);
+   02CF D5            [11]  594 	push	de
+   02D0 7B            [ 4]  595 	ld	a,e
+   02D1 F5            [11]  596 	push	af
+   02D2 33            [ 6]  597 	inc	sp
+   02D3 CDr00r00      [17]  598 	call	_SIO_SendChar
+   02D6 33            [ 6]  599 	inc	sp
+   02D7 D1            [10]  600 	pop	de
+                            601 ;src\terminal.c:152: SIO_SendString("\" correct? [y/n]", 16);		
+   02D8 21r39r03      [10]  602 	ld	hl,#___str_11
+   02DB D5            [11]  603 	push	de
+   02DC 01 10 00      [10]  604 	ld	bc,#0x0010
+   02DF C5            [11]  605 	push	bc
+   02E0 E5            [11]  606 	push	hl
+   02E1 CDr00r00      [17]  607 	call	_SIO_SendString
+   02E4 F1            [10]  608 	pop	af
+   02E5 F1            [10]  609 	pop	af
+   02E6 CDr00r00      [17]  610 	call	_SIO_GetChar
+   02E9 7D            [ 4]  611 	ld	a,l
+   02EA D1            [10]  612 	pop	de
+                            613 ;src\terminal.c:154: } while(isCorrect != 'y');
+   02EB D6 79         [ 7]  614 	sub	a, #0x79
+   02ED 20 B2         [12]  615 	jr	NZ,00101$
+                            616 ;src\terminal.c:156: SIO_SendString("\r\n", 2);
+   02EF 21r4Ar03      [10]  617 	ld	hl,#___str_12
+   02F2 D5            [11]  618 	push	de
+   02F3 01 02 00      [10]  619 	ld	bc,#0x0002
+   02F6 C5            [11]  620 	push	bc
+   02F7 E5            [11]  621 	push	hl
+   02F8 CDr00r00      [17]  622 	call	_SIO_SendString
+   02FB F1            [10]  623 	pop	af
+   02FC F1            [10]  624 	pop	af
+   02FD D1            [10]  625 	pop	de
+                            626 ;src\terminal.c:158: return (unsigned int) (((unsigned int) addrh << 8) | addrl);
+   02FE 62            [ 4]  627 	ld	h, d
+   02FF 3E 00         [ 7]  628 	ld	a, #0x00
+   0301 16 00         [ 7]  629 	ld	d, #0x00
+   0303 B3            [ 4]  630 	or	a, e
+   0304 6F            [ 4]  631 	ld	l,a
+   0305 7C            [ 4]  632 	ld	a,h
+   0306 B2            [ 4]  633 	or	a, d
+   0307 67            [ 4]  634 	ld	h,a
+   0308 C9            [10]  635 	ret
+   0309                     636 _getUserInputAddress_end::
+   0309                     637 ___str_9:
+   0309 0D                  638 	.db 0x0D
+   030A 0A                  639 	.db 0x0A
+   030B 45 6E 74 65 72 20   640 	.ascii "Enter address [low, high]:"
+        61 64 64 72 65 73
+        73 20 5B 6C 6F 77
+        2C 20 68 69 67 68
+        5D 3A
+   0325 00                  641 	.db 0x00
+   0326                     642 ___str_10:
+   0326 0D                  643 	.db 0x0D
+   0327 0A                  644 	.db 0x0A
+   0328 49 73 20 74 68 65   645 	.ascii "Is the address "
+        20 61 64 64 72 65
+        73 73 20
+   0337 22                  646 	.db 0x22
+   0338 00                  647 	.db 0x00
+   0339                     648 ___str_11:
+   0339 22                  649 	.db 0x22
+   033A 20 63 6F 72 72 65   650 	.ascii " correct? [y/n]"
+        63 74 3F 20 5B 79
+        2F 6E 5D
+   0349 00                  651 	.db 0x00
+   034A                     652 ___str_12:
+   034A 0D                  653 	.db 0x0D
+   034B 0A                  654 	.db 0x0A
+   034C 00                  655 	.db 0x00
+                            656 	.area _CODE
+                            657 	.area _INITIALIZER
+                            658 	.area _CABS (ABS)

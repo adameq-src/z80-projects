@@ -1,0 +1,245 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.4.0 #8981 (Apr  5 2014) (MINGW64)
+                              4 ; This file was generated Wed Jul 29 04:18:14 2015
+                              5 ;--------------------------------------------------------
+                              6 	.module z80system
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _delay_ms
+                             13 	.globl _charToHexStr
+                             14 	.globl _writeByteToMemory
+                             15 	.globl _writeBufferToMemory
+                             16 	.globl _readByteFromMemory
+                             17 ;--------------------------------------------------------
+                             18 ; special function registers
+                             19 ;--------------------------------------------------------
+                     0000    20 _PA	=	0x0000
+                     0001    21 _PA_CONTROL	=	0x0001
+                     0002    22 _PB	=	0x0002
+                     0003    23 _PB_CONTROL	=	0x0003
+                     0040    24 _SIO_A_DATA	=	0x0040
+                     0041    25 _SIO_A_CMD	=	0x0041
+                     0042    26 _SIO_B_DATA	=	0x0042
+                     0043    27 _SIO_B_CMD	=	0x0043
+                     0060    28 _PIO1_8255_PA	=	0x0060
+                     0061    29 _PIO1_8255_PB	=	0x0061
+                     0062    30 _PIO1_8255_PC	=	0x0062
+                     0063    31 _PIO1_8255_CONTROL	=	0x0063
+                     0080    32 _PIO2_8255_PA	=	0x0080
+                     0081    33 _PIO2_8255_PB	=	0x0081
+                     0082    34 _PIO2_8255_PC	=	0x0082
+                     0083    35 _PIO2_8255_CONTROL	=	0x0083
+                     00A0    36 _PIO3_8255_PA	=	0x00a0
+                     00A1    37 _PIO3_8255_PB	=	0x00a1
+                     00A2    38 _PIO3_8255_PC	=	0x00a2
+                     00A3    39 _PIO3_8255_CONTROL	=	0x00a3
+                             40 ;--------------------------------------------------------
+                             41 ; ram data
+                             42 ;--------------------------------------------------------
+                             43 	.area _DATA
+   0000                      44 _charToHexStr_x_1_11:
+   0000                      45 	.ds 1
+                             46 ;--------------------------------------------------------
+                             47 ; ram data
+                             48 ;--------------------------------------------------------
+                             49 	.area _INITIALIZED
+                             50 ;--------------------------------------------------------
+                             51 ; absolute external ram data
+                             52 ;--------------------------------------------------------
+                             53 	.area _DABS (ABS)
+                             54 ;--------------------------------------------------------
+                             55 ; global & static initialisations
+                             56 ;--------------------------------------------------------
+                             57 	.area _HOME
+                             58 	.area _GSINIT
+                             59 	.area _GSFINAL
+                             60 	.area _GSINIT
+                             61 ;--------------------------------------------------------
+                             62 ; Home
+                             63 ;--------------------------------------------------------
+                             64 	.area _HOME
+                             65 	.area _HOME
+                             66 ;--------------------------------------------------------
+                             67 ; code
+                             68 ;--------------------------------------------------------
+                             69 	.area _CODE
+                             70 ;src\z80system.c:3: void delay_ms(int time) {
+                             71 ;	---------------------------------
+                             72 ; Function delay_ms
+                             73 ; ---------------------------------
+   0000                      74 _delay_ms_start::
+   0000                      75 _delay_ms:
+                             76 ;src\z80system.c:6: for (i = 0; i < time; i++)
+   0000 11 00 00      [10]   77 	ld	de,#0x0000
+   0003                      78 00107$:
+   0003 21 02 00      [10]   79 	ld	hl,#2
+   0006 39            [11]   80 	add	hl,sp
+   0007 7B            [ 4]   81 	ld	a,e
+   0008 96            [ 7]   82 	sub	a, (hl)
+   0009 7A            [ 4]   83 	ld	a,d
+   000A 23            [ 6]   84 	inc	hl
+   000B 9E            [ 7]   85 	sbc	a, (hl)
+   000C E2r11r00      [10]   86 	jp	PO, 00129$
+   000F EE 80         [ 7]   87 	xor	a, #0x80
+   0011                      88 00129$:
+   0011 F0            [11]   89 	ret	P
+                             90 ;src\z80system.c:8: for(j = 0; j < 0x30; j++){};//1ms delay
+   0012 01 30 00      [10]   91 	ld	bc,#0x0030
+   0015                      92 00105$:
+   0015 0B            [ 6]   93 	dec	bc
+   0016 78            [ 4]   94 	ld	a,b
+   0017 B1            [ 4]   95 	or	a,c
+   0018 20 FB         [12]   96 	jr	NZ,00105$
+                             97 ;src\z80system.c:6: for (i = 0; i < time; i++)
+   001A 13            [ 6]   98 	inc	de
+   001B 18 E6         [12]   99 	jr	00107$
+   001D C9            [10]  100 	ret
+   001E                     101 _delay_ms_end::
+                            102 ;src\z80system.c:13: void charToHexStr(unsigned char cc, char *str)
+                            103 ;	---------------------------------
+                            104 ; Function charToHexStr
+                            105 ; ---------------------------------
+   001E                     106 _charToHexStr_start::
+   001E                     107 _charToHexStr:
+   001E DD E5         [15]  108 	push	ix
+   0020 DD 21 00 00   [14]  109 	ld	ix,#0
+   0024 DD 39         [15]  110 	add	ix,sp
+   0026 3B            [ 6]  111 	dec	sp
+                            112 ;src\z80system.c:15: unsigned char c = cc;
+   0027 DD 56 04      [19]  113 	ld	d,4 (ix)
+                            114 ;src\z80system.c:18: x=c>>4;
+   002A 7A            [ 4]  115 	ld	a,d
+   002B 07            [ 4]  116 	rlca
+   002C 07            [ 4]  117 	rlca
+   002D 07            [ 4]  118 	rlca
+   002E 07            [ 4]  119 	rlca
+   002F E6 0F         [ 7]  120 	and	a,#0x0F
+   0031 32r00r00      [13]  121 	ld	(#_charToHexStr_x_1_11 + 0),a
+                            122 ;src\z80system.c:19: *str=x+(x>9?('A'-10):'0');
+   0034 DD 4E 05      [19]  123 	ld	c,5 (ix)
+   0037 DD 46 06      [19]  124 	ld	b,6 (ix)
+   003A 3E 09         [ 7]  125 	ld	a,#0x09
+   003C FD 21r00r00   [14]  126 	ld	iy,#_charToHexStr_x_1_11
+   0040 FD 96 00      [19]  127 	sub	a, 0 (iy)
+   0043 30 04         [12]  128 	jr	NC,00103$
+   0045 1E 37         [ 7]  129 	ld	e,#0x37
+   0047 18 02         [12]  130 	jr	00104$
+   0049                     131 00103$:
+   0049 1E 30         [ 7]  132 	ld	e,#0x30
+   004B                     133 00104$:
+   004B 3Ar00r00      [13]  134 	ld	a,(#_charToHexStr_x_1_11 + 0)
+   004E 83            [ 4]  135 	add	a, e
+   004F 02            [ 7]  136 	ld	(bc),a
+                            137 ;src\z80system.c:20: x=c&0x0f;
+   0050 7A            [ 4]  138 	ld	a,d
+   0051 E6 0F         [ 7]  139 	and	a, #0x0F
+   0053 32r00r00      [13]  140 	ld	(#_charToHexStr_x_1_11 + 0),a
+                            141 ;src\z80system.c:21: str[1]=x+(x>9?('A'-10):'0');
+   0056 59            [ 4]  142 	ld	e, c
+   0057 50            [ 4]  143 	ld	d, b
+   0058 13            [ 6]  144 	inc	de
+   0059 3E 09         [ 7]  145 	ld	a,#0x09
+   005B FD 21r00r00   [14]  146 	ld	iy,#_charToHexStr_x_1_11
+   005F FD 96 00      [19]  147 	sub	a, 0 (iy)
+   0062 30 06         [12]  148 	jr	NC,00105$
+   0064 DD 36 FF 37   [19]  149 	ld	-1 (ix),#0x37
+   0068 18 04         [12]  150 	jr	00106$
+   006A                     151 00105$:
+   006A DD 36 FF 30   [19]  152 	ld	-1 (ix),#0x30
+   006E                     153 00106$:
+   006E 3Ar00r00      [13]  154 	ld	a,(#_charToHexStr_x_1_11 + 0)
+   0071 DD 86 FF      [19]  155 	add	a, -1 (ix)
+   0074 12            [ 7]  156 	ld	(de),a
+                            157 ;src\z80system.c:22: str[2]=0;
+   0075 69            [ 4]  158 	ld	l,c
+   0076 60            [ 4]  159 	ld	h,b
+   0077 23            [ 6]  160 	inc	hl
+   0078 23            [ 6]  161 	inc	hl
+   0079 36 00         [10]  162 	ld	(hl),#0x00
+   007B 33            [ 6]  163 	inc	sp
+   007C DD E1         [14]  164 	pop	ix
+   007E C9            [10]  165 	ret
+   007F                     166 _charToHexStr_end::
+                            167 ;src\z80system.c:25: void writeByteToMemory(unsigned int address, unsigned char data)
+                            168 ;	---------------------------------
+                            169 ; Function writeByteToMemory
+                            170 ; ---------------------------------
+   007F                     171 _writeByteToMemory_start::
+   007F                     172 _writeByteToMemory:
+                            173 ;src\z80system.c:27: unsigned char *p = (unsigned char *) (address);	
+   007F C1            [10]  174 	pop	bc
+   0080 E1            [10]  175 	pop	hl
+   0081 E5            [11]  176 	push	hl
+   0082 C5            [11]  177 	push	bc
+                            178 ;src\z80system.c:28: *p = data;
+   0083 FD 21 04 00   [14]  179 	ld	iy,#4
+   0087 FD 39         [15]  180 	add	iy,sp
+   0089 FD 7E 00      [19]  181 	ld	a,0 (iy)
+   008C 77            [ 7]  182 	ld	(hl),a
+   008D C9            [10]  183 	ret
+   008E                     184 _writeByteToMemory_end::
+                            185 ;src\z80system.c:31: void writeBufferToMemory(unsigned int startAddress, unsigned char *data, unsigned int byteCount)
+                            186 ;	---------------------------------
+                            187 ; Function writeBufferToMemory
+                            188 ; ---------------------------------
+   008E                     189 _writeBufferToMemory_start::
+   008E                     190 _writeBufferToMemory:
+   008E DD E5         [15]  191 	push	ix
+   0090 DD 21 00 00   [14]  192 	ld	ix,#0
+   0094 DD 39         [15]  193 	add	ix,sp
+   0096 F5            [11]  194 	push	af
+                            195 ;src\z80system.c:34: unsigned char *p = (unsigned char *) (startAddress);
+   0097 DD 7E 04      [19]  196 	ld	a,4 (ix)
+   009A DD 77 FE      [19]  197 	ld	-2 (ix),a
+   009D DD 7E 05      [19]  198 	ld	a,5 (ix)
+   00A0 DD 77 FF      [19]  199 	ld	-1 (ix),a
+                            200 ;src\z80system.c:36: for(i = 0; i < byteCount; i++) {
+   00A3 11 00 00      [10]  201 	ld	de,#0x0000
+   00A6                     202 00103$:
+   00A6 7B            [ 4]  203 	ld	a,e
+   00A7 DD 96 08      [19]  204 	sub	a, 8 (ix)
+   00AA 7A            [ 4]  205 	ld	a,d
+   00AB DD 9E 09      [19]  206 	sbc	a, 9 (ix)
+   00AE 30 16         [12]  207 	jr	NC,00105$
+                            208 ;src\z80system.c:37: *(p + i) = data[i];
+   00B0 DD 7E FE      [19]  209 	ld	a,-2 (ix)
+   00B3 83            [ 4]  210 	add	a, e
+   00B4 4F            [ 4]  211 	ld	c,a
+   00B5 DD 7E FF      [19]  212 	ld	a,-1 (ix)
+   00B8 8A            [ 4]  213 	adc	a, d
+   00B9 47            [ 4]  214 	ld	b,a
+   00BA DD 6E 06      [19]  215 	ld	l,6 (ix)
+   00BD DD 66 07      [19]  216 	ld	h,7 (ix)
+   00C0 19            [11]  217 	add	hl,de
+   00C1 7E            [ 7]  218 	ld	a,(hl)
+   00C2 02            [ 7]  219 	ld	(bc),a
+                            220 ;src\z80system.c:36: for(i = 0; i < byteCount; i++) {
+   00C3 13            [ 6]  221 	inc	de
+   00C4 18 E0         [12]  222 	jr	00103$
+   00C6                     223 00105$:
+   00C6 DD F9         [10]  224 	ld	sp, ix
+   00C8 DD E1         [14]  225 	pop	ix
+   00CA C9            [10]  226 	ret
+   00CB                     227 _writeBufferToMemory_end::
+                            228 ;src\z80system.c:41: unsigned char readByteFromMemory(unsigned int address)
+                            229 ;	---------------------------------
+                            230 ; Function readByteFromMemory
+                            231 ; ---------------------------------
+   00CB                     232 _readByteFromMemory_start::
+   00CB                     233 _readByteFromMemory:
+                            234 ;src\z80system.c:43: unsigned char *p = (unsigned char *) (address);
+   00CB C1            [10]  235 	pop	bc
+   00CC E1            [10]  236 	pop	hl
+   00CD E5            [11]  237 	push	hl
+   00CE C5            [11]  238 	push	bc
+                            239 ;src\z80system.c:45: return *p;
+   00CF 6E            [ 7]  240 	ld	l,(hl)
+   00D0 C9            [10]  241 	ret
+   00D1                     242 _readByteFromMemory_end::
+                            243 	.area _CODE
+                            244 	.area _INITIALIZER
+                            245 	.area _CABS (ABS)

@@ -1,0 +1,12 @@
+-mjwx
+-i terminal.ihx
+-b _CODE = 0x0000
+-b _DATA = 0x4000
+-k C:\Program Files\SDCC\bin\..\lib\z80
+-l z80
+terminal.rel
+z80system.rel
+z80lcd.rel
+z80sio.rel
+
+-e

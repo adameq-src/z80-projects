@@ -1,0 +1,37 @@
+XL2
+H 9 areas 4 global symbols
+M z80system
+O -mz80
+S .__.ABS. Def0000
+A _CODE size 1E flags 0 addr 0
+S _delay_ms_end Def001E
+S _delay_ms Def0000
+S _delay_ms_start Def0000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00
+R 00 00 00 00
+T 00 00
+R 00 00 00 00
+T 00 00 11 00 00
+R 00 00 00 00
+T 03 00
+R 00 00 00 00
+T 03 00 21 02 00 39 7B 96 7A 23 9E E2 11 00 EE 80
+R 00 00 00 00 00 0C 00 00
+T 11 00
+R 00 00 00 00
+T 11 00 F0 01 30 00
+R 00 00 00 00
+T 15 00
+R 00 00 00 00
+T 15 00 0B 78 B1 20 FB 13 18 E6 C9
+R 00 00 00 00
+T 1E 00
+R 00 00 00 00

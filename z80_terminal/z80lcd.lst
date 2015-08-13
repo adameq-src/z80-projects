@@ -1,0 +1,381 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.4.0 #8981 (Apr  5 2014) (MINGW64)
+                              4 ; This file was generated Wed Jul 29 04:18:15 2015
+                              5 ;--------------------------------------------------------
+                              6 	.module z80lcd
+                              7 	.optsdcc -mz80
+                              8 	
+                              9 ;--------------------------------------------------------
+                             10 ; Public variables in this module
+                             11 ;--------------------------------------------------------
+                             12 	.globl _delay_ms
+                             13 	.globl _LCD_ShowBin
+                             14 	.globl _LCD_Init
+                             15 	.globl _LCD_DispString
+                             16 	.globl _LCD_DispChar
+                             17 	.globl _LCD_SendNibble
+                             18 	.globl _LCD_ClearScreen
+                             19 ;--------------------------------------------------------
+                             20 ; special function registers
+                             21 ;--------------------------------------------------------
+                     0000    22 _PA	=	0x0000
+                     0001    23 _PA_CONTROL	=	0x0001
+                     0002    24 _PB	=	0x0002
+                     0003    25 _PB_CONTROL	=	0x0003
+                     0040    26 _SIO_A_DATA	=	0x0040
+                     0041    27 _SIO_A_CMD	=	0x0041
+                     0042    28 _SIO_B_DATA	=	0x0042
+                     0043    29 _SIO_B_CMD	=	0x0043
+                     0060    30 _PIO1_8255_PA	=	0x0060
+                     0061    31 _PIO1_8255_PB	=	0x0061
+                     0062    32 _PIO1_8255_PC	=	0x0062
+                     0063    33 _PIO1_8255_CONTROL	=	0x0063
+                     0080    34 _PIO2_8255_PA	=	0x0080
+                     0081    35 _PIO2_8255_PB	=	0x0081
+                     0082    36 _PIO2_8255_PC	=	0x0082
+                     0083    37 _PIO2_8255_CONTROL	=	0x0083
+                     00A0    38 _PIO3_8255_PA	=	0x00a0
+                     00A1    39 _PIO3_8255_PB	=	0x00a1
+                     00A2    40 _PIO3_8255_PC	=	0x00a2
+                     00A3    41 _PIO3_8255_CONTROL	=	0x00a3
+                             42 ;--------------------------------------------------------
+                             43 ; ram data
+                             44 ;--------------------------------------------------------
+                             45 	.area _DATA
+                             46 ;--------------------------------------------------------
+                             47 ; ram data
+                             48 ;--------------------------------------------------------
+                             49 	.area _INITIALIZED
+                             50 ;--------------------------------------------------------
+                             51 ; absolute external ram data
+                             52 ;--------------------------------------------------------
+                             53 	.area _DABS (ABS)
+                             54 ;--------------------------------------------------------
+                             55 ; global & static initialisations
+                             56 ;--------------------------------------------------------
+                             57 	.area _HOME
+                             58 	.area _GSINIT
+                             59 	.area _GSFINAL
+                             60 	.area _GSINIT
+                             61 ;--------------------------------------------------------
+                             62 ; Home
+                             63 ;--------------------------------------------------------
+                             64 	.area _HOME
+                             65 	.area _HOME
+                             66 ;--------------------------------------------------------
+                             67 ; code
+                             68 ;--------------------------------------------------------
+                             69 	.area _CODE
+                             70 ;src\z80lcd.c:4: void LCD_ShowBin(char byte)
+                             71 ;	---------------------------------
+                             72 ; Function LCD_ShowBin
+                             73 ; ---------------------------------
+   0000                      74 _LCD_ShowBin_start::
+   0000                      75 _LCD_ShowBin:
+   0000 DD E5         [15]   76 	push	ix
+   0002 DD 21 00 00   [14]   77 	ld	ix,#0
+   0006 DD 39         [15]   78 	add	ix,sp
+   0008 F5            [11]   79 	push	af
+                             80 ;src\z80lcd.c:8: for (i = 0x80; i > 0; i = i >> 1)
+   0009 21 80 00      [10]   81 	ld	hl,#0x0080
+   000C E3            [19]   82 	ex	(sp), hl
+   000D                      83 00107$:
+                             84 ;src\z80lcd.c:10: if(byte & i) {
+   000D DD 66 04      [19]   85 	ld	h,4 (ix)
+   0010 DD 7E 04      [19]   86 	ld	a,4 (ix)
+   0013 17            [ 4]   87 	rla
+   0014 9F            [ 4]   88 	sbc	a, a
+   0015 6F            [ 4]   89 	ld	l,a
+   0016 7C            [ 4]   90 	ld	a,h
+   0017 DD A6 FE      [19]   91 	and	a, -2 (ix)
+   001A 67            [ 4]   92 	ld	h,a
+   001B 7D            [ 4]   93 	ld	a,l
+   001C DD A6 FF      [19]   94 	and	a, -1 (ix)
+   001F B4            [ 4]   95 	or	a,h
+   0020 28 0A         [12]   96 	jr	Z,00102$
+                             97 ;src\z80lcd.c:11: LCD_DispChar('1');
+   0022 3E 31         [ 7]   98 	ld	a,#0x31
+   0024 F5            [11]   99 	push	af
+   0025 33            [ 6]  100 	inc	sp
+   0026 CDr16r01      [17]  101 	call	_LCD_DispChar
+   0029 33            [ 6]  102 	inc	sp
+   002A 18 08         [12]  103 	jr	00103$
+   002C                     104 00102$:
+                            105 ;src\z80lcd.c:13: LCD_DispChar('0');
+   002C 3E 30         [ 7]  106 	ld	a,#0x30
+   002E F5            [11]  107 	push	af
+   002F 33            [ 6]  108 	inc	sp
+   0030 CDr16r01      [17]  109 	call	_LCD_DispChar
+   0033 33            [ 6]  110 	inc	sp
+   0034                     111 00103$:
+                            112 ;src\z80lcd.c:16: if(i == 0x10)
+   0034 DD 7E FE      [19]  113 	ld	a,-2 (ix)
+   0037 D6 10         [ 7]  114 	sub	a, #0x10
+   0039 20 0E         [12]  115 	jr	NZ,00108$
+   003B DD 7E FF      [19]  116 	ld	a,-1 (ix)
+   003E B7            [ 4]  117 	or	a, a
+   003F 20 08         [12]  118 	jr	NZ,00108$
+                            119 ;src\z80lcd.c:17: LCD_DispChar(' ');
+   0041 3E 20         [ 7]  120 	ld	a,#0x20
+   0043 F5            [11]  121 	push	af
+   0044 33            [ 6]  122 	inc	sp
+   0045 CDr16r01      [17]  123 	call	_LCD_DispChar
+   0048 33            [ 6]  124 	inc	sp
+   0049                     125 00108$:
+                            126 ;src\z80lcd.c:8: for (i = 0x80; i > 0; i = i >> 1)
+   0049 DD CB FF 2E   [23]  127 	sra	-1 (ix)
+   004D DD CB FE 1E   [23]  128 	rr	-2 (ix)
+   0051 AF            [ 4]  129 	xor	a, a
+   0052 DD BE FE      [19]  130 	cp	a, -2 (ix)
+   0055 DD 9E FF      [19]  131 	sbc	a, -1 (ix)
+   0058 E2r5Dr00      [10]  132 	jp	PO, 00125$
+   005B EE 80         [ 7]  133 	xor	a, #0x80
+   005D                     134 00125$:
+   005D FAr0Dr00      [10]  135 	jp	M,00107$
+   0060 DD F9         [10]  136 	ld	sp, ix
+   0062 DD E1         [14]  137 	pop	ix
+   0064 C9            [10]  138 	ret
+   0065                     139 _LCD_ShowBin_end::
+                            140 ;src\z80lcd.c:21: void LCD_Init(void)
+                            141 ;	---------------------------------
+                            142 ; Function LCD_Init
+                            143 ; ---------------------------------
+   0065                     144 _LCD_Init_start::
+   0065                     145 _LCD_Init:
+                            146 ;src\z80lcd.c:23: PB_CONTROL = 0x0F;
+   0065 3E 0F         [ 7]  147 	ld	a,#0x0F
+   0067 D3 03         [11]  148 	out	(_PB_CONTROL),a
+                            149 ;src\z80lcd.c:24: PB = 0x00;
+   0069 3E 00         [ 7]  150 	ld	a,#0x00
+   006B D3 02         [11]  151 	out	(_PB),a
+                            152 ;src\z80lcd.c:26: delay_ms(180);
+   006D 21 B4 00      [10]  153 	ld	hl,#0x00B4
+   0070 E5            [11]  154 	push	hl
+   0071 CDr00r00      [17]  155 	call	_delay_ms
+                            156 ;src\z80lcd.c:29: LCD_SendNibble(0x03);
+   0074 26 03         [ 7]  157 	ld	h,#0x03
+   0076 E3            [19]  158 	ex	(sp),hl
+   0077 33            [ 6]  159 	inc	sp
+   0078 CDr45r01      [17]  160 	call	_LCD_SendNibble
+   007B 33            [ 6]  161 	inc	sp
+                            162 ;src\z80lcd.c:30: delay_ms(5);
+   007C 21 05 00      [10]  163 	ld	hl,#0x0005
+   007F E5            [11]  164 	push	hl
+   0080 CDr00r00      [17]  165 	call	_delay_ms
+                            166 ;src\z80lcd.c:31: LCD_SendNibble(0x03);
+   0083 26 03         [ 7]  167 	ld	h,#0x03
+   0085 E3            [19]  168 	ex	(sp),hl
+   0086 33            [ 6]  169 	inc	sp
+   0087 CDr45r01      [17]  170 	call	_LCD_SendNibble
+   008A 33            [ 6]  171 	inc	sp
+                            172 ;src\z80lcd.c:32: delay_ms(1);
+   008B 21 01 00      [10]  173 	ld	hl,#0x0001
+   008E E5            [11]  174 	push	hl
+   008F CDr00r00      [17]  175 	call	_delay_ms
+                            176 ;src\z80lcd.c:33: LCD_SendNibble(0x03);
+   0092 26 03         [ 7]  177 	ld	h,#0x03
+   0094 E3            [19]  178 	ex	(sp),hl
+   0095 33            [ 6]  179 	inc	sp
+   0096 CDr45r01      [17]  180 	call	_LCD_SendNibble
+   0099 33            [ 6]  181 	inc	sp
+                            182 ;src\z80lcd.c:34: delay_ms(1);
+   009A 21 01 00      [10]  183 	ld	hl,#0x0001
+   009D E5            [11]  184 	push	hl
+   009E CDr00r00      [17]  185 	call	_delay_ms
+                            186 ;src\z80lcd.c:35: LCD_SendNibble(0x02);
+   00A1 26 02         [ 7]  187 	ld	h,#0x02
+   00A3 E3            [19]  188 	ex	(sp),hl
+   00A4 33            [ 6]  189 	inc	sp
+   00A5 CDr45r01      [17]  190 	call	_LCD_SendNibble
+   00A8 33            [ 6]  191 	inc	sp
+                            192 ;src\z80lcd.c:36: delay_ms(1);
+   00A9 21 01 00      [10]  193 	ld	hl,#0x0001
+   00AC E5            [11]  194 	push	hl
+   00AD CDr00r00      [17]  195 	call	_delay_ms
+                            196 ;src\z80lcd.c:38: LCD_SendNibble(0x02);
+   00B0 26 02         [ 7]  197 	ld	h,#0x02
+   00B2 E3            [19]  198 	ex	(sp),hl
+   00B3 33            [ 6]  199 	inc	sp
+   00B4 CDr45r01      [17]  200 	call	_LCD_SendNibble
+   00B7 33            [ 6]  201 	inc	sp
+                            202 ;src\z80lcd.c:39: LCD_SendNibble(0x08);
+   00B8 3E 08         [ 7]  203 	ld	a,#0x08
+   00BA F5            [11]  204 	push	af
+   00BB 33            [ 6]  205 	inc	sp
+   00BC CDr45r01      [17]  206 	call	_LCD_SendNibble
+   00BF 33            [ 6]  207 	inc	sp
+                            208 ;src\z80lcd.c:41: LCD_SendNibble(0x00);
+   00C0 AF            [ 4]  209 	xor	a, a
+   00C1 F5            [11]  210 	push	af
+   00C2 33            [ 6]  211 	inc	sp
+   00C3 CDr45r01      [17]  212 	call	_LCD_SendNibble
+   00C6 33            [ 6]  213 	inc	sp
+                            214 ;src\z80lcd.c:42: LCD_SendNibble(0x0C);
+   00C7 3E 0C         [ 7]  215 	ld	a,#0x0C
+   00C9 F5            [11]  216 	push	af
+   00CA 33            [ 6]  217 	inc	sp
+   00CB CDr45r01      [17]  218 	call	_LCD_SendNibble
+   00CE 33            [ 6]  219 	inc	sp
+                            220 ;src\z80lcd.c:44: LCD_SendNibble(0x00);
+   00CF AF            [ 4]  221 	xor	a, a
+   00D0 F5            [11]  222 	push	af
+   00D1 33            [ 6]  223 	inc	sp
+   00D2 CDr45r01      [17]  224 	call	_LCD_SendNibble
+   00D5 33            [ 6]  225 	inc	sp
+                            226 ;src\z80lcd.c:45: LCD_SendNibble(0x01);
+   00D6 3E 01         [ 7]  227 	ld	a,#0x01
+   00D8 F5            [11]  228 	push	af
+   00D9 33            [ 6]  229 	inc	sp
+   00DA CDr45r01      [17]  230 	call	_LCD_SendNibble
+   00DD 33            [ 6]  231 	inc	sp
+                            232 ;src\z80lcd.c:47: LCD_SendNibble(0x00);
+   00DE AF            [ 4]  233 	xor	a, a
+   00DF F5            [11]  234 	push	af
+   00E0 33            [ 6]  235 	inc	sp
+   00E1 CDr45r01      [17]  236 	call	_LCD_SendNibble
+   00E4 33            [ 6]  237 	inc	sp
+                            238 ;src\z80lcd.c:48: LCD_SendNibble(0x06);
+   00E5 3E 06         [ 7]  239 	ld	a,#0x06
+   00E7 F5            [11]  240 	push	af
+   00E8 33            [ 6]  241 	inc	sp
+   00E9 CDr45r01      [17]  242 	call	_LCD_SendNibble
+   00EC 33            [ 6]  243 	inc	sp
+   00ED C9            [10]  244 	ret
+   00EE                     245 _LCD_Init_end::
+                            246 ;src\z80lcd.c:51: void LCD_DispString(char * string, int charCnt)
+                            247 ;	---------------------------------
+                            248 ; Function LCD_DispString
+                            249 ; ---------------------------------
+   00EE                     250 _LCD_DispString_start::
+   00EE                     251 _LCD_DispString:
+                            252 ;src\z80lcd.c:55: for (i = 0; i < charCnt; i++)
+   00EE 11 00 00      [10]  253 	ld	de,#0x0000
+   00F1                     254 00103$:
+   00F1 21 04 00      [10]  255 	ld	hl,#4
+   00F4 39            [11]  256 	add	hl,sp
+   00F5 7B            [ 4]  257 	ld	a,e
+   00F6 96            [ 7]  258 	sub	a, (hl)
+   00F7 7A            [ 4]  259 	ld	a,d
+   00F8 23            [ 6]  260 	inc	hl
+   00F9 9E            [ 7]  261 	sbc	a, (hl)
+   00FA E2rFFr00      [10]  262 	jp	PO, 00116$
+   00FD EE 80         [ 7]  263 	xor	a, #0x80
+   00FF                     264 00116$:
+   00FF F0            [11]  265 	ret	P
+                            266 ;src\z80lcd.c:57: LCD_DispChar(string[i]);
+   0100 21 02 00      [10]  267 	ld	hl, #2
+   0103 39            [11]  268 	add	hl, sp
+   0104 7E            [ 7]  269 	ld	a, (hl)
+   0105 23            [ 6]  270 	inc	hl
+   0106 66            [ 7]  271 	ld	h, (hl)
+   0107 6F            [ 4]  272 	ld	l, a
+   0108 19            [11]  273 	add	hl,de
+   0109 66            [ 7]  274 	ld	h,(hl)
+   010A D5            [11]  275 	push	de
+   010B E5            [11]  276 	push	hl
+   010C 33            [ 6]  277 	inc	sp
+   010D CDr16r01      [17]  278 	call	_LCD_DispChar
+   0110 33            [ 6]  279 	inc	sp
+   0111 D1            [10]  280 	pop	de
+                            281 ;src\z80lcd.c:55: for (i = 0; i < charCnt; i++)
+   0112 13            [ 6]  282 	inc	de
+   0113 18 DC         [12]  283 	jr	00103$
+   0115 C9            [10]  284 	ret
+   0116                     285 _LCD_DispString_end::
+                            286 ;src\z80lcd.c:61: void LCD_DispChar(char data)
+                            287 ;	---------------------------------
+                            288 ; Function LCD_DispChar
+                            289 ; ---------------------------------
+   0116                     290 _LCD_DispChar_start::
+   0116                     291 _LCD_DispChar:
+                            292 ;src\z80lcd.c:65: foo = (data >> 4) & 0x0F;
+   0116 FD 21 02 00   [14]  293 	ld	iy,#2
+   011A FD 39         [15]  294 	add	iy,sp
+   011C FD 7E 00      [19]  295 	ld	a,0 (iy)
+   011F CB 2F         [ 8]  296 	sra	a
+   0121 CB 2F         [ 8]  297 	sra	a
+   0123 CB 2F         [ 8]  298 	sra	a
+   0125 CB 2F         [ 8]  299 	sra	a
+   0127 E6 0F         [ 7]  300 	and	a, #0x0F
+                            301 ;src\z80lcd.c:66: setb(foo, RS);
+   0129 CB E7         [ 8]  302 	set	4, a
+   012B 67            [ 4]  303 	ld	h,a
+                            304 ;src\z80lcd.c:67: LCD_SendNibble(foo);
+   012C E5            [11]  305 	push	hl
+   012D 33            [ 6]  306 	inc	sp
+   012E CDr45r01      [17]  307 	call	_LCD_SendNibble
+   0131 33            [ 6]  308 	inc	sp
+                            309 ;src\z80lcd.c:69: foo = data & 0xFF;
+   0132 FD 21 02 00   [14]  310 	ld	iy,#2
+   0136 FD 39         [15]  311 	add	iy,sp
+                            312 ;src\z80lcd.c:70: setb(foo, RS);
+   0138 FD 7E 00      [19]  313 	ld	a, 0 (iy)
+   013B CB E7         [ 8]  314 	set	4, a
+   013D 67            [ 4]  315 	ld	h,a
+                            316 ;src\z80lcd.c:71: LCD_SendNibble(foo);
+   013E E5            [11]  317 	push	hl
+   013F 33            [ 6]  318 	inc	sp
+   0140 CDr45r01      [17]  319 	call	_LCD_SendNibble
+   0143 33            [ 6]  320 	inc	sp
+   0144 C9            [10]  321 	ret
+   0145                     322 _LCD_DispChar_end::
+                            323 ;src\z80lcd.c:74: void LCD_SendNibble(char data)
+                            324 ;	---------------------------------
+                            325 ; Function LCD_SendNibble
+                            326 ; ---------------------------------
+   0145                     327 _LCD_SendNibble_start::
+   0145                     328 _LCD_SendNibble:
+   0145 DD E5         [15]  329 	push	ix
+   0147 DD 21 00 00   [14]  330 	ld	ix,#0
+   014B DD 39         [15]  331 	add	ix,sp
+                            332 ;src\z80lcd.c:76: data &= 0x1F;
+   014D DD 7E 04      [19]  333 	ld	a,4 (ix)
+   0150 E6 1F         [ 7]  334 	and	a, #0x1F
+                            335 ;src\z80lcd.c:78: setb(data, CLK);
+   0152 DD 77 04      [19]  336 	ld	4 (ix), a
+   0155 CB EF         [ 8]  337 	set	5, a
+                            338 ;src\z80lcd.c:79: PB = data;
+   0157 DD 77 04      [19]  339 	ld	4 (ix), a
+   015A D3 02         [11]  340 	out	(_PB),a
+                            341 ;src\z80lcd.c:80: delay_ms(1);
+   015C 21 01 00      [10]  342 	ld	hl,#0x0001
+   015F E5            [11]  343 	push	hl
+   0160 CDr00r00      [17]  344 	call	_delay_ms
+   0163 F1            [10]  345 	pop	af
+                            346 ;src\z80lcd.c:82: clrb(data, CLK);
+                            347 ;src\z80lcd.c:83: PB = data;
+   0164 DD CB 04 AE   [23]  348 	res	5, 4 (ix)
+   0168 DD 7E 04      [19]  349 	ld	a, 4 (ix)
+   016B D3 02         [11]  350 	out	(_PB),a
+                            351 ;src\z80lcd.c:84: delay_ms(1);
+   016D 21 01 00      [10]  352 	ld	hl,#0x0001
+   0170 E5            [11]  353 	push	hl
+   0171 CDr00r00      [17]  354 	call	_delay_ms
+   0174 F1            [10]  355 	pop	af
+   0175 DD E1         [14]  356 	pop	ix
+   0177 C9            [10]  357 	ret
+   0178                     358 _LCD_SendNibble_end::
+                            359 ;src\z80lcd.c:88: void LCD_ClearScreen(void)
+                            360 ;	---------------------------------
+                            361 ; Function LCD_ClearScreen
+                            362 ; ---------------------------------
+   0178                     363 _LCD_ClearScreen_start::
+   0178                     364 _LCD_ClearScreen:
+                            365 ;src\z80lcd.c:90: LCD_SendNibble(0x00);
+   0178 AF            [ 4]  366 	xor	a, a
+   0179 F5            [11]  367 	push	af
+   017A 33            [ 6]  368 	inc	sp
+   017B CDr45r01      [17]  369 	call	_LCD_SendNibble
+   017E 33            [ 6]  370 	inc	sp
+                            371 ;src\z80lcd.c:91: LCD_SendNibble(0x01);
+   017F 3E 01         [ 7]  372 	ld	a,#0x01
+   0181 F5            [11]  373 	push	af
+   0182 33            [ 6]  374 	inc	sp
+   0183 CDr45r01      [17]  375 	call	_LCD_SendNibble
+   0186 33            [ 6]  376 	inc	sp
+   0187 C9            [10]  377 	ret
+   0188                     378 _LCD_ClearScreen_end::
+                            379 	.area _CODE
+                            380 	.area _INITIALIZER
+                            381 	.area _CABS (ABS)

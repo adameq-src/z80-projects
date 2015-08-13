@@ -1,0 +1,76 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           z80system
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__GSFINAL                      
+     00000000  l__GSINIT                       
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__CODE                         
+     00000000  s__DABS                         
+     00000001  l__DATA                         
+     000000D1  l__CODE                         
+     00004000  s__DATA                         
+     00004001  s__GSFINAL                      
+     00004001  s__GSINIT                       
+     00004001  s__HOME                         
+     00004001  s__INITIALIZED                  
+     00004001  s__INITIALIZER                  
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00000000    000000D1 =         209. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  _delay_ms                          z80system
+     00000000  _delay_ms_start                    z80system
+     0000001E  _charToHexStr                      z80system
+     0000001E  _charToHexStr_start                z80system
+     0000001E  _delay_ms_end                      z80system
+     0000007F  _charToHexStr_end                  z80system
+     0000007F  _writeByteToMemory                 z80system
+     0000007F  _writeByteToMemory_start           z80system
+     0000008E  _writeBufferToMemory               z80system
+     0000008E  _writeBufferToMemory_start         z80system
+     0000008E  _writeByteToMemory_end             z80system
+     000000CB  _readByteFromMemory                z80system
+     000000CB  _readByteFromMemory_start          z80system
+     000000CB  _writeBufferToMemory_end           z80system
+     000000D1  _readByteFromMemory_end            z80system
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_DATA                               00004000    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+
+Files Linked                              [ module(s) ]
+
+z80system.rel                             [ z80system ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
+
+User Base Address Definitions
+
+_CODE = 0x0000
+_DATA = 0x4000
+
+

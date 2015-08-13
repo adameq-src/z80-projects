@@ -1,0 +1,62 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 1.
+Hexadecimal [16-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =  2710 L
+    .__.ABS.                                                    =  0000 G
+    .__.CPU.                                                    =  0000 L
+    .__.H$L.                                                    =  0000 L
+    _PA                                                         =  0000 
+    _PA_CONTROL                                                 =  0001 
+    _PB                                                         =  0002 
+    _PB_CONTROL                                                 =  0003 
+    _PIO1_8255_CONTROL                                          =  0063 
+    _PIO1_8255_PA                                               =  0060 
+    _PIO1_8255_PB                                               =  0061 
+    _PIO1_8255_PC                                               =  0062 
+    _PIO2_8255_CONTROL                                          =  0083 
+    _PIO2_8255_PA                                               =  0080 
+    _PIO2_8255_PB                                               =  0081 
+    _PIO2_8255_PC                                               =  0082 
+    _PIO3_8255_CONTROL                                          =  00A3 
+    _PIO3_8255_PA                                               =  00A0 
+    _PIO3_8255_PB                                               =  00A1 
+    _PIO3_8255_PC                                               =  00A2 
+    _SIO_A_CMD                                                  =  0041 
+    _SIO_A_DATA                                                 =  0040 
+    _SIO_B_CMD                                                  =  0043 
+    _SIO_B_DATA                                                 =  0042 
+  0 _charToHexStr                                                  001E GR
+  0 _charToHexStr_end                                              007F GR
+  0 _charToHexStr_start                                            001E GR
+  1 _charToHexStr_x_1_11                                           0000 R
+  0 _delay_ms                                                      0000 GR
+  0 _delay_ms_end                                                  001E GR
+  0 _delay_ms_start                                                0000 GR
+  0 _readByteFromMemory                                            00CB GR
+  0 _readByteFromMemory_end                                        00D1 GR
+  0 _readByteFromMemory_start                                      00CB GR
+  0 _writeBufferToMemory                                           008E GR
+  0 _writeBufferToMemory_end                                       00CB GR
+  0 _writeBufferToMemory_start                                     008E GR
+  0 _writeByteToMemory                                             007F GR
+  0 _writeByteToMemory_end                                         008E GR
+  0 _writeByteToMemory_start                                       007F GR
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
+Hexadecimal [16-Bits]
+
+Area Table
+
+   0 _CODE                                      size   D1   flags    0
+   1 _DATA                                      size    1   flags    0
+   2 _INITIALIZED                               size    0   flags    0
+   3 _DABS                                      size    0   flags    8
+   4 _HOME                                      size    0   flags    0
+   5 _GSINIT                                    size    0   flags    0
+   6 _GSFINAL                                   size    0   flags    0
+   7 _INITIALIZER                               size    0   flags    0
+   8 _CABS                                      size    0   flags    8
+

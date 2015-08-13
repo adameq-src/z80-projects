@@ -1,0 +1,120 @@
+ASxxxx Linker V03.00 + NoICE + sdld,  page 1.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+.  .ABS.                            00000000    00000000 =           0. bytes (ABS,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  .__.ABS.                           
+     00000000  l__CABS                         
+     00000000  l__DABS                         
+     00000000  l__GSFINAL                      
+     00000000  l__GSINIT                       
+     00000000  l__HOME                         
+     00000000  l__INITIALIZED                  
+     00000000  l__INITIALIZER                  
+     00000000  s__CABS                         
+     00000000  s__CODE                         
+     00000000  s__DABS                         
+     00000001  l__DATA                         
+     0000026D  l__CODE                         
+     00004000  s__DATA                         
+     00004001  s__GSFINAL                      
+     00004001  s__GSINIT                       
+     00004001  s__HOME                         
+     00004001  s__INITIALIZED                  
+     00004001  s__INITIALIZER                  
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_CODE                               00000000    0000026D =         621. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+     00000000  _SIO_Init                          z80sio
+     00000000  _SIO_Init_start                    z80sio
+     00000031  _SIO_Init_end                      z80sio
+     00000031  _SIO_SendChar                      z80sio
+     00000031  _SIO_SendChar_start                z80sio
+     00000047  _SIO_SendChar_end                  z80sio
+     00000047  _SIO_SendString                    z80sio
+     00000047  _SIO_SendString_start              z80sio
+     0000006F  _SIO_GetChar                       z80sio
+     0000006F  _SIO_GetChar_start                 z80sio
+     0000006F  _SIO_SendString_end                z80sio
+     00000080  _SIO_DumpMemory                    z80sio
+     00000080  _SIO_DumpMemory_start              z80sio
+     00000080  _SIO_GetChar_end                   z80sio
+     000000F7  _SIO_DumpMemory_end                z80sio
+     000000FA  _delay_ms                          z80system
+     000000FA  _delay_ms_start                    z80system
+     00000118  _charToHexStr                      z80system
+     00000118  _charToHexStr_start                z80system
+     00000118  _delay_ms_end                      z80system
+     00000179  _charToHexStr_end                  z80system
+     00000179  _writeByteToMemory                 z80system
+     00000179  _writeByteToMemory_start           z80system
+     00000188  _writeBufferToMemory               z80system
+     00000188  _writeBufferToMemory_start         z80system
+     00000188  _writeByteToMemory_end             z80system
+     000001C5  _readByteFromMemory                z80system
+     000001C5  _readByteFromMemory_start          z80system
+     000001C5  _writeBufferToMemory_end           z80system
+     000001CB  __modschar_rrx_s                   
+     000001CB  _readByteFromMemory_end            z80system
+     000001D2  __modschar_rrx_hds                 
+     000001D8  __modsint_rrx_s                    
+     000001DE  __modsint_rrx_hds                  
+     000001E4  __divsint_rrx_s                    
+     000001ED  __divschar_rrx_s                   
+     000001F4  __div8                             
+     000001F4  __divschar_rrx_hds                 
+     000001F8  __div_signexte                     
+     000001FC  __div16                            
+     000001FC  __divsint_rrx_hds                  
+     00000222  __get_remainder                    
+     0000022C  __divuint_rrx_s                    
+     00000234  __divuchar_rrx_s                   
+     0000023B  __divu8                            
+     0000023B  __divuchar_rrx_hds                 
+     0000023E  __divu16                           
+     0000023E  __divuint_rrx_hds                  
+ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
+Hexadecimal  [32-Bits]
+
+Area                                    Addr        Size        Decimal Bytes (Attributes)
+--------------------------------        ----        ----        ------- ----- ------------
+_DATA                               00004000    00000001 =           1. bytes (REL,CON)
+
+      Value  Global                              Global Defined In Module
+      -----  --------------------------------   ------------------------
+ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
+
+Files Linked                              [ module(s) ]
+
+z80sio.rel                                [ z80sio ]
+z80system.rel                             [ z80system ]
+
+
+Libraries Linked                          [ object file ]
+
+C:\Program Files\SDCC\bin\..\lib\z80/z80.lib
+                                          [ modsigned.rel ]
+C:\Program Files\SDCC\bin\..\lib\z80/z80.lib
+                                          [ divsigned.rel ]
+C:\Program Files\SDCC\bin\..\lib\z80/z80.lib
+                                          [ divunsigned.rel ]
+
+ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
+
+User Base Address Definitions
+
+_CODE = 0x0000
+_DATA = 0x4000
+
+
